@@ -1,2 +1,2 @@
-Appular-lite
+Appular-Sites
 ============
