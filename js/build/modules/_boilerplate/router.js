@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){var r=n.Router.extend({initialize:function(){},routes:{"":"index"},index:function(){console.log("index")}});return new r});
