@@ -9,6 +9,8 @@
         'underscore': 'libraries/underscore/underscore',
         'backboneLib': 'libraries/backbone/backbone-1.0.0',
         'backbone': 'libraries/backbone/backbone',
+        'moment': 'empty:',
+        'numeral': 'empty:',
         'domReady': 'libraries/require/plugins/domReady',
         'async': 'libraries/require/plugins/async',
         'json': 'libraries/require/plugins/json',
