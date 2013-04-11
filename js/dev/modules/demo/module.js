@@ -3,10 +3,8 @@ define([
     'underscore',
     'backbone',
     'modules/demo/router',
-    'moment',
-    'numeral',
     'text!modules/demo/templates/module.html'
-], function ($, _, Backbone, Router, Moment, Numeral, Template) {
+], function ($, _, Backbone, Router, Template) {
 
     var View = Backbone.View.extend({
 
