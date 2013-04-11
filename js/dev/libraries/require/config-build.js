@@ -6,15 +6,15 @@ requirejs.config({
     paths: {
         'jqueryLib': [
             '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
-            'libraries/jquery/jquery-1.9.1.min'
+            'libraries/jquery/jquery-1.9.1'
         ],
         'moment': [
             '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min',
-            'libraries/moment/moment.min'
+            'libraries/moment/moment'
         ],
         'numeral': [
             '//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min',
-            'libraries/numeral/numeral.min'
+            'libraries/numeral/numeral'
         ]
     },
     deps: [

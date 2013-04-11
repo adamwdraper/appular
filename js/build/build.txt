@@ -3,6 +3,7 @@ appular.js
 ----------------
 libraries/require/require.js
 appular.js
+libraries/modernizr/modernizr.js
 libraries/require/config-build.js
 libraries/require/plugins/domReady.js
 domReady!

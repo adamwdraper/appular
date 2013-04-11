@@ -20,6 +20,7 @@
         {
             name: 'appular',
             include: [
+                'libraries/modernizr/modernizr',
                 'libraries/require/require',
                 'libraries/require/config-build',
                 'libraries/appular/appular',
