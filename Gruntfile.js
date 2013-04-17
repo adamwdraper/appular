@@ -88,5 +88,4 @@ module.exports = function(grunt) {
         'jshint',
         'requirejs'
     ]);
-
 };
