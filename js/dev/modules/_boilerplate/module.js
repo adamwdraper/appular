@@ -2,9 +2,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'apps/resume/router',
-    'text!apps/resume/templates/app.html'
-], function ($, _, Backbone, Router, AppTemplate) {
+    'text!modules/_boilerplate/templates/app.html'
+], function ($, _, Backbone, Template) {
 
     var View = Backbone.View.extend({
 
@@ -15,7 +14,7 @@ define([
         },
 
         render: function() {
-            this.$el.html(_.template(AppTemplate, {}));
+            this.$el.html(_.template(Template, {}));
 
             return this;
         }
