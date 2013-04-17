@@ -1,1 +1,0 @@
-define(["jquery","underscore","backbone","apps/resume/router","text!apps/resume/templates/app.html"],function(e,t,n,r,i){var s=n.View.extend({events:{},initialize:function(){t.bindAll(this)},render:function(){return this.$el.html(t.template(i,{})),this}});return new s});
