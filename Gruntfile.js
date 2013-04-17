@@ -10,16 +10,20 @@ module.exports = function(grunt) {
                 'js/dev/utilities/**/*.js'
             ],
             options: {
-                'node': true,
-                'browser': true,
-                'curly': true,
-                'devel': false,
-                'eqeqeq': true,
-                'eqnull': true,
-                'newcap': true,
-                'noarg': true,
-                'sub': true,
-                'strict': false
+                node: true,
+                browser: true,
+                curly: true,
+                devel: false,
+                eqeqeq: true,
+                eqnull: true,
+                newcap: true,
+                noarg: true,
+                sub: true,
+                undef: true,
+                globals: {
+                    define: false
+                },
+                strict: false
             }
         }
     });
@@ -27,7 +31,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('build', [
+    grunt.registerTask('release', [
         'jshint',
         'requirejs'
     ]);
