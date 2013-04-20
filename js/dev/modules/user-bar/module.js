@@ -10,14 +10,16 @@ define([
         events: {},
 
         initialize: function() {
+            _.bindAll(this);
         },
 
         render: function(){
             $(this.el).html(_.template(Template, {}));
+
             return this;
         }
 
     });
 
-    return new View();
+    return View;
 });

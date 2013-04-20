@@ -9,22 +9,24 @@ require([
     'underscore',
     'backbone'
 ], function (doc, $, _, Backbone) {
-    var $module = $('[data-appular-module]');
+    var $modules = $('[data-appular-module]');
 
-    var startHistory = _.after($module.length, function () {
+    var startHistory = _.after($modules.length, function () {
         Backbone.history.start();
     });
 
-    if ($module) {
-        $.each($module, function (index, element) {
+    if ($modules) {
+        $.each($modules, function (index, element) {
             require([
                 'modules/' + $(element).data('appular-module') + '/module'
             ], function (Module) {
-                var module = Module.setElement($(element)).render();
+                var module = new Module({
+                    el: $(element)
+                });
+                module.render();
                 startHistory();
             });
         });
-
     } else {
         console.log('No module element found.');
     }
