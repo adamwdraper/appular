@@ -3,6 +3,32 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        open : {
+            dev : {
+                path: 'http://127.0.0.1:8888/'
+            }
+        },
+        sass: {
+            dev: {
+                files: {
+                    'css/dev/style.css': 'scss/style.scss'
+                }
+            },
+            build: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'css/build/style.css': 'scss/style.scss'
+                }
+            }
+        },
+        watch: {
+            files: 'scss/**/*',
+            tasks: [
+                'sass:dev'
+            ]
+        },
         jshint: {
             all: [
                 'js/dev/modules/**/*.js',
@@ -81,10 +107,19 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+
+    grunt.registerTask('default', [
+        'open:dev',
+        'watch'
+    ]);
 
     grunt.registerTask('release', [
+        'sass:build',
         'jshint',
         'requirejs'
     ]);

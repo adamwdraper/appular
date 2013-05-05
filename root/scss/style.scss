@@ -1,0 +1,9 @@
+$blue: blue;
+
+@import "button.scss";
+
+body {
+    color: $blue;
+    font-size: 10em;
+    font-weight: bold;
+}
