@@ -30,7 +30,8 @@ exports.template = function(grunt, init, done) {
 
     init.process({}, [
         // Prompt for these values.
-        init.prompt('name', 'Appular-project'),
+        init.prompt('name', 'appular-project'),
+        init.prompt('title', 'Appular Project'),
         init.prompt('description', 'The best Appular project ever.'),
         init.prompt('version'),
         init.prompt('repository'),
