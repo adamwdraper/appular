@@ -1,0 +1,5 @@
+define([
+    'zeptoLib'
+], function () {
+    return $;
+});

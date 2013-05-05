@@ -40,15 +40,30 @@ exports.template = function(grunt, init, done) {
         init.prompt('licenses', 'MIT'),
         init.prompt('author_name'),
         init.prompt('author_email'),
-        init.prompt('author_url')
+        init.prompt('author_url'),
+        {
+          name: '$',
+          message: '$ [jquery, zepto]',
+          default: 'jquery',
+          validator: /^[\w\-\.]+$/,
+          warning: 'Must be only letters, numbers, dashes, dots or underscores.'
+        }
         // {
-        //   name: 'style',
-        //   message: 'What style technology? (scss, css)',
+        //   name: 'stylesheets',
+        //   message: 'Stylesheets (scss, css)',
         //   default: 'scss',
         //   validator: /^[\w\-\.]+$/,
-        //   warning: 'Must be only letters, numbers, dashes, dots or underscores. (If this is not for a client, say HOUSE)'
+        //   warning: 'Must be only letters, numbers, dashes, dots or underscores.'
         // }
     ], function(err, props) {
+        if (props.$ === 'zepto') {
+            props.$_version = '1.0';
+            props.$_cdn = '//cdnjs.cloudflare.com/ajax/libs/zepto/' + props.$_version + '/zepto.min.js';
+        } else if (props.$ === 'jquery') {
+            props.$_version = '1.9.1';
+            props.$_cdn = '//ajax.googleapis.com/ajax/libs/jquery/' + props.$_version + '/jquery.min';
+        }
+
         // Files to copy (and process).
         var files = init.filesToCopy(props);
 
@@ -57,24 +72,24 @@ exports.template = function(grunt, init, done) {
 
         // Actually copy (and process) files.
         init.copyAndProcess(files, props, {
-            noProcess: 'js/libraries/**'
+            noProcess: 'node_modules/**/*'
         });
 
         // Generate package.json file, used by npm and grunt.
-        init.writePackageJSON('package.json', {
-            name: 'jquery-plugin',
-            version: '0.0.0',
-            // TODO: pull from grunt's package.json
-            node_version: '>= 0.8.0',
-            devDependencies: {
-                'grunt-contrib-jshint': '~0.1.1',
-                'grunt-contrib-qunit': '~0.1.1',
-                'grunt-contrib-concat': '~0.1.2',
-                'grunt-contrib-uglify': '~0.1.1',
-                'grunt-contrib-watch': '~0.2.0',
-                'grunt-contrib-clean': '~0.4.0'
-            }
-        });
+        // init.writePackageJSON('package.json', {
+        //     name: 'appular-project',
+        //     version: '0.0.0',
+        //     // TODO: pull from grunt's package.json
+        //     node_version: '>= 0.8.0',
+        //     devDependencies: {
+        //         'grunt-contrib-jshint': '~0.1.1',
+        //         'grunt-contrib-qunit': '~0.1.1',
+        //         'grunt-contrib-concat': '~0.1.2',
+        //         'grunt-contrib-uglify': '~0.1.1',
+        //         'grunt-contrib-watch': '~0.2.0',
+        //         'grunt-contrib-clean': '~0.4.0'
+        //     }
+        // });
 
         // All done!
         done();

@@ -4,9 +4,9 @@
 requirejs.config({
     baseUrl: '/js/dev',
     paths: {
-        'jqueryLib': 'libraries/jquery/jquery-1.9.1',
-        'jquery': 'libraries/jquery/jquery',
-        'jqueryFunctions': 'libraries/jquery/functions',
+        '{%= $ %}Lib': 'libraries/{%= $ %}/{%= $ %}-{%= $_version %}',
+        '{%= $ %}': 'libraries/{%= $ %}/{%= $ %}',
+        '{%= $ %}Functions': 'libraries/{%= $ %}/functions',
         'underscoreLib': 'libraries/underscore/underscore-1.4.4',
         'underscore': 'libraries/underscore/underscore',
         'backboneLib': 'libraries/backbone/backbone-1.0.0',
@@ -19,6 +19,6 @@ requirejs.config({
         'text': 'libraries/require/plugins/text'
     },
     deps: [
-        'jqueryFunctions'
+        '{%= $ %}Functions'
     ]
 });
