@@ -4,9 +4,12 @@
 requirejs.config({
     baseUrl: '/js/dev',
     paths: {
-        '{%= $ %}Lib': 'libraries/{%= $ %}/{%= $ %}-{%= $_version %}',
-        '{%= $ %}': 'libraries/{%= $ %}/{%= $ %}',
-        '{%= $ %}Functions': 'libraries/{%= $ %}/functions',
+        'jqueryLib': 'libraries/jquery/jquery-1.10.2',
+        'jquery': 'libraries/jquery/jquery',
+        'jqueryFunctions': 'libraries/jquery/functions',
+        'zeptoLib': 'libraries/zepto/zepto-1.0',
+        'zepto': 'libraries/zepto/zepto',
+        'zeptoFunctions': 'libraries/zepto/functions',
         'underscoreLib': 'libraries/underscore/underscore-1.4.4',
         'underscore': 'libraries/underscore/underscore',
         'backboneLib': 'libraries/backbone/backbone-1.0.0',
@@ -19,6 +22,7 @@ requirejs.config({
         'text': 'libraries/require/plugins/text'
     },
     deps: [
-        '{%= $ %}Functions'
+        'jqueryFunctions',
+        'zeptoFunctions'
     ]
 });

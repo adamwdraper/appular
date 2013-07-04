@@ -47,7 +47,8 @@ module.exports = function(grunt) {
                 sub: true,
                 undef: true,
                 globals: {
-                    define: false
+                    define: false,
+                    requirejs: false
                 },
                 strict: false
             }
@@ -58,9 +59,12 @@ module.exports = function(grunt) {
                     baseUrl: 'js/dev',
                     dir: 'js/build',
                     paths: {
-                        '{%= $ %}Lib': 'empty:',
-                        '{%= $ %}': 'libraries/{%= $ %}/{%= $ %}',
-                        '{%= $ %}Functions': 'libraries/{%= $ %}/functions',
+                        'jqueryLib': 'empty:',
+                        'jquery': 'libraries/jquery/jquery',
+                        'jqueryFunctions': 'libraries/jquery/functions',
+                        'zeptoLib': 'empty:',
+                        'zepto': 'libraries/zepto/zepto',
+                        'zeptoFunctions': 'libraries/zepto/functions',
                         'underscoreLib': 'libraries/underscore/underscore-1.4.4',
                         'underscore': 'libraries/underscore/underscore',
                         'backboneLib': 'libraries/backbone/backbone-1.0.0',
@@ -80,8 +84,10 @@ module.exports = function(grunt) {
                                 'libraries/require/require',
                                 'libraries/require/config-build',
                                 'libraries/appular/appular',
-                                '{%= $ %}',
-                                '{%= $ %}Functions',
+                                'jquery',
+                                'jqueryFunctions',
+                                'zepto',
+                                'zeptoFunctions',
                                 'underscore',
                                 'backbone',
                                 'domReady',
