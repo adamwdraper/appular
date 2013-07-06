@@ -2,7 +2,7 @@ define([
     '{%= $ %}',
     'underscore',
     'backbone',
-    'text!modules/_boilerplate/templates/app.html'
+    'text!modules/_boilerplate/templates/module.html'
 ], function ($, _, Backbone, Template) {
 
     var View = Backbone.View.extend({
