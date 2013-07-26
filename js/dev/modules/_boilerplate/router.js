@@ -1,5 +1,5 @@
 define([
-    '{%= $ %}',
+    'jquery',
     'underscore',
     'backbone'
 ], function ($, _, Backbone) {
@@ -11,9 +11,7 @@ define([
             '': 'index'
         },
 
-        index: function () {
-            console.log('index');
-        }
+        index: function () {}
 
     });
 
