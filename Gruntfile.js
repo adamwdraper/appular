@@ -65,7 +65,7 @@ module.exports = function(grunt) {
                         'zeptoLib': 'empty:',
                         'zepto': 'libraries/zepto/zepto',
                         'zeptoFunctions': 'libraries/zepto/functions',
-                        'underscoreLib': 'libraries/underscore/underscore-1.4.4',
+                        'underscoreLib': 'libraries/underscore/underscore-1.5.1',
                         'underscore': 'libraries/underscore/underscore',
                         'backboneLib': 'libraries/backbone/backbone-1.0.0',
                         'backbone': 'libraries/backbone/backbone',
@@ -119,12 +119,18 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
 
-    grunt.registerTask('default', [
+    grunt.registerTask('default', 'Builds dev SASS, opens browser window with dev url, and starts SASS watch', [
+        'sass:dev',
         'open:dev',
         'watch'
     ]);
 
-    grunt.registerTask('release', [
+    grunt.registerTask('dev', 'Builds dev SASS and starts SASS watch', [
+        'sass:dev',
+        'watch'
+    ]);
+
+    grunt.registerTask('build', 'Builds production SASS, hints and builds production JS', [
         'sass:build',
         'jshint',
         'requirejs'
