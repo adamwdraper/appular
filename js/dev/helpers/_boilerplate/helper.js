@@ -1,9 +1,8 @@
 define([
     'jquery',
     'underscore',
-    'backbone',
-    'text!plugins/_boilerplate/teplates/plugin.html'
-], function($, _, Backbone, Template) {
+    'backbone'
+], function($, _, Backbone) {
 
     var View = Backbone.View.extend({
 
@@ -12,12 +11,10 @@ define([
         initialize: function () {},
 
         render: function () {
-            this.$el.html(_.template(Template, {}));
-
             return this;
         }
 
     });
 
-    return View;
+    return new View();
 });

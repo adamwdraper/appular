@@ -9,12 +9,10 @@ define([
 
         events: {},
 
-        initialize: function() {
-            _.bindAll(this);
-        },
+        initialize: function() {},
 
         render: function(){
-            $(this.el).html(_.template(Template, {}));
+            this.$el.html(_.template(Template, {}));
 
             return this;
         }
