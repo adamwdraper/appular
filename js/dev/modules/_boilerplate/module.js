@@ -1,5 +1,5 @@
 define([
-    '{%= $ %}',
+    'jquery',
     'underscore',
     'backbone',
     'text!modules/_boilerplate/templates/app.html'

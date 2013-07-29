@@ -10,7 +10,7 @@ requirejs.config({
         'zeptoLib': 'libraries/zepto/zepto-1.0',
         'zepto': 'libraries/zepto/zepto',
         'zeptoFunctions': 'libraries/zepto/functions',
-        'underscoreLib': 'libraries/underscore/underscore-1.4.4',
+        'underscoreLib': 'libraries/underscore/underscore-1.5.1',
         'underscore': 'libraries/underscore/underscore',
         'backboneLib': 'libraries/backbone/backbone-1.0.0',
         'backbone': 'libraries/backbone/backbone',

@@ -8,9 +8,7 @@ define([
 
         events: {},
 
-        initialize: function () {
-            _.bindAll(this);
-        },
+        initialize: function () {},
 
         render: function () {
             Backbone.trigger('app:initialized');

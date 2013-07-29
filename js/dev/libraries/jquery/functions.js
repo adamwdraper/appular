@@ -1,6 +1,6 @@
 // Filename: libraries/jquery/functions.js
 define([
-    '{%= $ %}'
+    'jquery'
 ], function ($) {
     $.fn.toggleText = function (value1, value2) {
         return this.each(function () {

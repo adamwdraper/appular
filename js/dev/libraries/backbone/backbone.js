@@ -1,6 +1,6 @@
 // Filename: libraries/backbone/backbone
 define([
-    '{%= $ %}',
+    'jquery',
     'underscore',
     'backboneLib'
 ], function () {
