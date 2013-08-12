@@ -4,11 +4,17 @@
             "name": "jquery",
             "extensions": [
                 {
+                    "version": "v1.3",
+                    "description": "jquery functions",
                     "name": "functions"
                 }
             ],
+            "version": "v1.10.2",
+            "description": "Dom library",
             "plugins": [
                 {
+                    "version": "v1.3",
+                    "description": "",
                     "name": "hotkey"
                 }
             ]
@@ -16,16 +22,22 @@
     ],
     "modules": [
         {
+            "version": "v0.1.0",
+            "description": "makes calls to api and returns data to a callback",
             "name": "user-bar"
         }
     ],
     "plugins": [
         {
+            "version": "v0.1.2",
+            "description": "makes calls to api and returns data to a callback",
             "name": "photo"
         }
     ],
     "utilities": [
         {
+            "version": "v0.1.2",
+            "description": "makes calls to api and returns data to a callback",
             "name": "api"
         }
     ]

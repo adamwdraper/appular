@@ -6,14 +6,6 @@ var fs = require('fs'),
         output: './js/docs/docs.json',
         pretty: false
     },
-    tags = [
-        'appular',
-        'extends',
-        'define',
-        'link',
-        'function',
-        'event'
-    ],
     docsJson = {},
     regExpEscape = function(s) {
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -73,9 +65,25 @@ var fs = require('fs'),
                                             // extracts all tags
                                             doc.lines = comment.match(/(@.*[^\r\n])/g);
 
-                                            // _.each(doc.lines, function (line) {
+                                            _.each(doc.lines, function (line) {
+                                                var tag,
+                                                    tempModule;
 
-                                            // });
+                                                _.str.trim(line);
+
+                                                tag = line.match(/^@(\w)+/gi)[0];
+
+                                                switch (tag) {
+                                                    case '@appular':
+                                                        tempModule = {
+                                                            version: line.match(/v[\d\.]+/gi)[0],
+                                                            description: line.match(/- (.)*$/gi) ? line.match(/- (.)*/gi)[0].slice(2) : ''
+                                                        };
+                                                        break;
+                                                }
+
+                                                _.extend(module, tempModule);
+                                            });
 
                                         });
 
@@ -84,8 +92,9 @@ var fs = require('fs'),
                                             docsJson[directories[0]] = [];
                                         }
 
-                                        parent = _.find(docsJson[directories[0]], function (p) {
-                                            return p.name === directories[1];
+                                        // check to see if parent module exhists already
+                                        parent = _.find(docsJson[directories[0]], function (parent) {
+                                            return parent.name === directories[1];
                                         });
 
                                         module.name = directories.length === 2 ? directories[1] : file.split('.')[0];

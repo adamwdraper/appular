@@ -1,5 +1,5 @@
 /**
-@appular v1.3 - keyup events
+@appular v1.3
     @link http://www.jqueryhotkeys.com
 */
 
