@@ -6,7 +6,7 @@ define([
     'text!modules/demo/templates/module.html'
 ], function ($, _, Backbone, Router, Template) {
 
-    var View = Backbone.View.extend({
+    var view = Backbone.View.extend({
 
         events: {},
 
@@ -20,5 +20,5 @@ define([
 
     });
 
-    return View;
+    return view;
 });
