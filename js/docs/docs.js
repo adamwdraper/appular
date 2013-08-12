@@ -140,6 +140,8 @@ process.argv.forEach(function (value, index, flags) {
         options.pretty = true;
     } else if (value === '-o') {
         options.output = flags[index + 1];
+    } else if (value === '-p') {
+        options.pretty = true;
     }
 });
 
