@@ -1,0 +1,28 @@
+{
+    "libraries": [
+        {
+            "name": "functions.js"
+        },
+        {
+            "name": "jquery-1.10.2.js"
+        },
+        {
+            "name": "hotkey.js"
+        }
+    ],
+    "modules": [
+        {
+            "name": "module.js"
+        }
+    ],
+    "plugins": [
+        {
+            "name": "plugin.js"
+        }
+    ],
+    "utilities": [
+        {
+            "name": "utility.js"
+        }
+    ]
+}

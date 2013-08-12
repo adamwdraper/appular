@@ -2,9 +2,9 @@ var fs = require('fs'),
     util = require('util'),
     _ = require('underscore'),
     options = {
-        pretty: false,
+        input: './js/dev',
         output: './js/docs/docs.json',
-        input: './js/dev'
+        pretty: false
     },
     tags = [
         'appular',
@@ -14,11 +14,11 @@ var fs = require('fs'),
         'function',
         'event'
     ],
-    docsJson = {};
-
-_.str = require('underscore.string');
-
-var walk = function (dir, done) {
+    docsJson = {},
+    regExpEscape = function(s) {
+        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    },
+    walk = function (dir, done) {
     fs.readdir(dir, function (error, list) {
         if (error) {
             return done(error);
@@ -27,7 +27,10 @@ var walk = function (dir, done) {
         var i = 0,
             next = function () {
                 var file = list[i++],
-                    path;
+                    path,
+                    re = new RegExp(regExpEscape(options.input) + '\/?', 'g'),
+                    directory = dir.replace(re, ''),
+                    directories = directory.split('/');
 
                 if (!file) {
                     return done(null);
@@ -38,7 +41,7 @@ var walk = function (dir, done) {
                 fs.stat(path, function (error, stat) {
 
                     if (stat && stat.isDirectory()) {
-                        walk(path, function (error) {
+                        walk(path, function () {
                             next();
                         });
                     } else {
@@ -58,7 +61,7 @@ var walk = function (dir, done) {
                                     data = fs.readFileSync(path, 'utf-8');
 
                                     // log file path
-                                    console.log(path.slice(2));
+                                    console.log(directories.join('/') + '/' + file);
 
                                     // begin module definition
                                     module = {
@@ -79,38 +82,10 @@ var walk = function (dir, done) {
 
                                     });
 
-                                    console.log(module);
-
-                                    // while (data.indexOf('/**', end) !== -1) {
-                                    //     // find doc name and type from first doc
-                                    //     start = data.indexOf('/**', end),
-                                    //     end = data.indexOf('*/', start) + 2;
-
-                                    //     // extract first documentation section
-                                    //     doc.data = data.slice(start, end);
-
-                                    //     // split into individual lines
-                                    //     doc.lines.push({
-                                    //         data: doc.data.split('\n')
-                                    //     });
-
-                                    //     for (i = 0; i < doc.lines.length; i++) {
-                                    //         // create array of data
-                                    //         doc.lines[i].parts = _.str.trim(doc.lines[i].data).split(' ');
-
-                                    //         // get tag
-                                    //         doc.lines[i].tag = doc.lines[i]..parts.shift().slice(1);
-
-                                    //         switch (line.tag) {
-                                    //             case 'appular':
-
-                                    //                 break;
-                                    //             }
-                                    //         }
-                                    //     }
-                                    // }
-                                    // // all docs done
-
+                                    if (!docsJson[directories[0]]) {
+                                        docsJson[directories[0]] = [];
+                                    }
+                                    docsJson[directories[0]].push(module);
                                 }
 
                                 next();
@@ -131,12 +106,15 @@ var walk = function (dir, done) {
 
         next();
     });
-};
+    };
+
+_.str = require('underscore.string');
+
 
 process.argv.forEach(function (value, index, flags) {
     if (value === '-t') {
         options.input = './js/docs/test/data';
-        options.output = './js/docs/test/output.json';
+        options.output = './js/docs/test/docs.json';
         options.pretty = true;
     } else if (value === '-o') {
         options.output = flags[index + 1];
@@ -145,7 +123,7 @@ process.argv.forEach(function (value, index, flags) {
     }
 });
 
-console.log(options);
+console.log('options: ' + JSON.stringify(options, null, 4));
 
 console.log('-------------------------------------------------------------');
 console.log('processing...');
