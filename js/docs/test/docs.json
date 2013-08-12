@@ -1,28 +1,32 @@
 {
     "libraries": [
         {
-            "name": "functions.js"
-        },
-        {
-            "name": "jquery-1.10.2.js"
-        },
-        {
-            "name": "hotkey.js"
+            "name": "jquery",
+            "extensions": [
+                {
+                    "name": "functions"
+                }
+            ],
+            "plugins": [
+                {
+                    "name": "hotkey"
+                }
+            ]
         }
     ],
     "modules": [
         {
-            "name": "module.js"
+            "name": "user-bar"
         }
     ],
     "plugins": [
         {
-            "name": "plugin.js"
+            "name": "photo"
         }
     ],
     "utilities": [
         {
-            "name": "utility.js"
+            "name": "api"
         }
     ]
 }

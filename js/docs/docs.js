@@ -19,93 +19,121 @@ var fs = require('fs'),
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     },
     walk = function (dir, done) {
-    fs.readdir(dir, function (error, list) {
-        if (error) {
-            return done(error);
-        }
+        fs.readdir(dir, function (error, list) {
+            if (error) {
+                return done(error);
+            }
 
-        var i = 0,
-            next = function () {
-                var file = list[i++],
-                    path,
-                    re = new RegExp(regExpEscape(options.input) + '\/?', 'g'),
-                    directory = dir.replace(re, ''),
-                    directories = directory.split('/');
+            var i = 0,
+                next = function () {
+                    var file = list[i++],
+                        path,
+                        re = new RegExp(regExpEscape(options.input) + '\/?', 'g'),
+                        directory = dir.replace(re, ''),
+                        directories = directory.split('/');
 
-                if (!file) {
-                    return done(null);
-                }
-
-                path = dir + '/' + file;
-
-                fs.stat(path, function (error, stat) {
-
-                    if (stat && stat.isDirectory()) {
-                        walk(path, function () {
-                            next();
-                        });
-                    } else {
-                        // open file
-                        try {
-                            fs.createReadStream(path, {
-                                encoding: 'utf-8',
-                                start: 0,
-                                end: 100
-                            })
-                            .on('data', function (snippet) {
-                                var data,
-                                    comments,
-                                    module;
-
-                                if (snippet.indexOf('@appular') !== -1) {
-                                    data = fs.readFileSync(path, 'utf-8');
-
-                                    // log file path
-                                    console.log(directories.join('/') + '/' + file);
-
-                                    // begin module definition
-                                    module = {
-                                        name: file
-                                    };
-
-                                    // gets all multi line comments in file
-                                    comments = data.match(/\/\*+([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*+\//gm);
-
-                                    _.each(comments, function (comment) {
-                                        var doc = {};
-                                        // extracts all tags
-                                        doc.lines = comment.match(/(@.*[^\r\n])/g);
-
-                                        // _.each(doc.lines, function (line) {
-                                            
-                                        // });
-
-                                    });
-
-                                    if (!docsJson[directories[0]]) {
-                                        docsJson[directories[0]] = [];
-                                    }
-                                    docsJson[directories[0]].push(module);
-                                }
-
-                                next();
-                            })
-                            .on('error', function(error){
-                                throw error;
-                            });
-                        }
-                        catch (processError) {
-                            console.error('There was an error processing the ' + file + ':');
-                            console.log(processError);
-                            console.log(processError.stack);
-                            return done(processError);
-                        }
+                    if (!file) {
+                        return done(null);
                     }
-                });
-            };
 
-        next();
-    });
+                    path = dir + '/' + file;
+
+                    fs.stat(path, function (error, stat) {
+
+                        if (stat && stat.isDirectory()) {
+                            walk(path, function () {
+                                next();
+                            });
+                        } else {
+                            // open file
+                            try {
+                                fs.createReadStream(path, {
+                                    encoding: 'utf-8',
+                                    start: 0,
+                                    end: 100
+                                })
+                                .on('data', function (snippet) {
+                                    var data,
+                                        comments,
+                                        newParent,
+                                        parent,
+                                        module = {};
+
+                                    if (snippet.indexOf('@appular') !== -1) {
+                                        data = fs.readFileSync(path, 'utf-8');
+
+                                        // log file path
+                                        console.log(directories.join('/') + '/' + file);
+
+                                        // gets all multi line comments in file
+                                        comments = data.match(/\/\*+([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*+\//gm);
+
+                                        _.each(comments, function (comment) {
+                                            var doc = {};
+                                            // extracts all tags
+                                            doc.lines = comment.match(/(@.*[^\r\n])/g);
+
+                                            // _.each(doc.lines, function (line) {
+
+                                            // });
+
+                                        });
+
+                                        // make sure root types are defined
+                                        if (!docsJson[directories[0]]) {
+                                            docsJson[directories[0]] = [];
+                                        }
+
+                                        parent = _.find(docsJson[directories[0]], function (p) {
+                                            return p.name === directories[1];
+                                        });
+
+                                        module.name = directories.length === 2 ? directories[1] : file.split('.')[0];
+
+                                        if (directories.length === 2) {
+                                            if (!parent) {
+                                                docsJson[directories[0]].push(module);
+                                            } else {
+                                                _.extend(parent, module);
+                                            }
+                                        } else {
+                                            if (!parent) {
+                                                parent = {
+                                                    name: directories[1]
+                                                };
+                                                newParent = true;
+                                            }
+
+                                            if (!parent[directories[2]]) {
+                                                parent[directories[2]] = [];
+                                            }
+
+                                            parent[directories[2]].push(module);
+
+                                            if (newParent) {
+                                                docsJson[directories[0]].push(parent);
+                                            }
+                                        }
+                                    }
+
+                                    next();
+                                })
+                                .on('error', function(error){
+                                    throw error;
+                                });
+                            }
+                            catch (processError) {
+                                console.error('There was an error processing the ' + file + ':');
+                                console.log(processError);
+                                console.log(processError.stack);
+                                return done(processError);
+                            }
+                        }
+                    });
+                };
+
+            next();
+        });
     };
 
 _.str = require('underscore.string');
