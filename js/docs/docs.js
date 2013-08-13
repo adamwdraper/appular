@@ -49,13 +49,15 @@ var fs = require('fs'),
                                         comments,
                                         newParent,
                                         parent,
-                                        module = {};
+                                        define = directories.join('/') + '/' + file,
+                                        module = {},
+                                        tempModule = {};
 
                                     if (snippet.indexOf('@appular') !== -1) {
                                         data = fs.readFileSync(path, 'utf-8');
 
                                         // log file path
-                                        console.log(directories.join('/') + '/' + file);
+                                        console.log(define);
 
                                         // gets all multi line comments in file
                                         comments = data.match(/\/\*+([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*+\//gm);
@@ -66,8 +68,7 @@ var fs = require('fs'),
                                             doc.lines = comment.match(/(@.*[^\r\n])/g);
 
                                             _.each(doc.lines, function (line) {
-                                                var tag,
-                                                    tempModule;
+                                                var tag;
 
                                                 _.str.trim(line);
 
@@ -75,16 +76,31 @@ var fs = require('fs'),
 
                                                 switch (tag) {
                                                     case '@appular':
-                                                        tempModule = {
+                                                        _.extend(tempModule, {
                                                             version: line.match(/v[\d\.]+/gi)[0],
                                                             description: line.match(/- (.)*$/gi) ? line.match(/- (.)*/gi)[0].slice(2) : ''
-                                                        };
+                                                        });
+                                                        break;
+                                                    case '@link':
+                                                        _.extend(tempModule, {
+                                                            link: line.match(/[^\s]+$/gi)[0]
+                                                        });
+                                                        break;
+                                                    case '@define':
+                                                        _.extend(tempModule, {
+                                                            define: line.match(/[^\s]+$/gi)[0]
+                                                        });
                                                         break;
                                                 }
 
-                                                _.extend(module, tempModule);
                                             });
 
+                                            // make sure module has a define property
+                                            if (!tempModule.define) {
+                                                tempModule.define = define.slice(-3) === '.js' ? define.slice(0, -3) : define;
+                                            }
+
+                                            _.extend(module, tempModule);
                                         });
 
                                         // make sure root types are defined
