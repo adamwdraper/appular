@@ -1,0 +1,95 @@
+{
+    "libraries": [
+        {
+            "name": "jquery",
+            "extras": {
+                "extensions": [
+                    {
+                        "name": "jqueryFunctions",
+                        "version": "v1.3",
+                        "description": "jquery functions",
+                        "link": "http://www.jqueryfunctions.com",
+                        "define": "libraries/jquery/extensions/functions"
+                    }
+                ],
+                "plugins": [
+                    {
+                        "name": "hotkeys",
+                        "version": "v1.3",
+                        "description": "",
+                        "link": "http://www.jqueryhotkeys.com",
+                        "define": "something/something.htmlc",
+                        "functions": [
+                            {
+                                "name": "test",
+                                "description": "keyup events"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "version": "v1.10.2",
+            "description": "",
+            "link": "http://www.jquery.com",
+            "define": "jquery"
+        }
+    ],
+    "modules": [
+        {
+            "name": "userBar",
+            "version": "v0.1.0",
+            "description": "makes calls to api and returns data to a callback",
+            "define": "modules/user-bar/module",
+            "events": [
+                {
+                    "name": "dataChanged",
+                    "description": "fired when any data is changed after initial load."
+                }
+            ]
+        }
+    ],
+    "plugins": [
+        {
+            "name": "photo",
+            "version": "v0.1.2",
+            "description": "makes calls to api and returns data to a callback",
+            "define": "plugins/photo/plugin",
+            "functions": [
+                {
+                    "name": "ajax",
+                    "description": ""
+                }
+            ],
+            "events": [
+                {
+                    "name": "dataChanged",
+                    "description": "fired when any data is changed after initial load."
+                }
+            ]
+        }
+    ],
+    "utilities": [
+        {
+            "name": "api",
+            "version": "v0.1.2",
+            "description": "makes calls to api and returns data to a callback",
+            "define": "api",
+            "functions": [
+                {
+                    "name": "ajax",
+                    "description": "make ajax call to api"
+                },
+                {
+                    "name": "data",
+                    "description": "datas"
+                }
+            ],
+            "events": [
+                {
+                    "name": "dataChanged",
+                    "description": "fired when any data is changed after initial load"
+                }
+            ]
+        }
+    ]
+}

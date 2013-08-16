@@ -1,0 +1,19 @@
+<div>
+    {{#key_value docs}}
+        <h1>{{key}}</h1>
+        {{#each value}}
+        <div>
+            <h2>{{name}}</h2>
+            {{#each extras}}
+            <div>
+                {{#each this}}
+                <div>
+                    <h3>{{name}}</h3>                    
+                </div>
+                {{/each}}                
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+    {{/key_value}}
+</div>  

@@ -6,7 +6,7 @@ requirejs.config({
     paths: {
         'jqueryLib': 'libraries/jquery/jquery-1.10.2',
         'jquery': 'libraries/jquery/jquery',
-        'jqueryFunctions': 'libraries/jquery/functions',
+        'jqueryFunctions': 'libraries/jquery/extensions/functions',
         'zeptoLib': 'libraries/zepto/zepto-1.0',
         'zepto': 'libraries/zepto/zepto',
         'zeptoFunctions': 'libraries/zepto/functions',
@@ -14,15 +14,19 @@ requirejs.config({
         'underscore': 'libraries/underscore/underscore',
         'backboneLib': 'libraries/backbone/backbone-1.0.0',
         'backbone': 'libraries/backbone/backbone',
+        'handlebars': 'libraries/handlebars/handlebars',
+        'handlebarsHelpers': 'libraries/handlebars/helpers/helpers',
         'moment': 'libraries/moment/moment',
         'numeral': 'libraries/numeral/numeral',
         'domReady': 'libraries/require/plugins/domReady',
         'async': 'libraries/require/plugins/async',
         'json': 'libraries/require/plugins/json',
-        'text': 'libraries/require/plugins/text'
+        'text': 'libraries/require/plugins/text',
+        'hbs': 'libraries/require/plugins/hbs'
     },
     deps: [
         'jqueryFunctions',
+        'handlebarsHelpers',
         'zeptoFunctions'
     ]
 });

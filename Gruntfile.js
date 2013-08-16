@@ -29,6 +29,18 @@ module.exports = function(grunt) {
                 'sass:dev'
             ]
         },
+        docs: {
+            build: {
+                options: {
+                    pretty: true
+                },
+                files: {
+                    'js/dev/modules/docs/json/docs.json': [
+                        'js/dev/**/*.js'
+                    ]
+                }
+            }
+        },
         jshint: {
             all: [
                 'js/dev/modules/**/*.js',
@@ -118,6 +130,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-appular-docs');
 
     grunt.registerTask('default', 'Builds dev SASS, opens browser window with dev url, and starts SASS watch', [
         'sass:dev',
@@ -133,6 +146,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', 'Builds production SASS, hints and builds production JS', [
         'sass:build',
         'jshint',
+        'docs:build',
         'requirejs'
     ]);
 };
