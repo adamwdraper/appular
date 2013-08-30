@@ -1,6 +1,6 @@
 {
   "name": "Appular",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.1.1",
@@ -8,9 +8,10 @@
     "grunt-contrib-sass": "~0.3.0",
     "grunt-contrib-watch": "~0.3.1",
     "grunt-open": "~0.2.0",
-    "grunt-appular-docs": "~0.1.1"
+    "grunt-appular-docs": ">=0.1.0"
   },
   "dependencies": {
-    "underscore.string": "~2.3.3"
+    "underscore.string": "~2.3.3",
+    "grunt-appular-docs": "~0.1.3"
   }
 }
