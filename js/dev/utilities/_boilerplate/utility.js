@@ -4,7 +4,7 @@ define([
     'backbone'
 ], function($, _, Backbone) {
 
-    var view = Backbone.View.extend({
+    var View = Backbone.View.extend({
 
         events: {},
 
@@ -16,5 +16,5 @@ define([
 
     });
 
-    return new view();
+    return new View();
 });

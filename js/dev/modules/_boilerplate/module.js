@@ -5,7 +5,7 @@ define([
     'text!modules/_boilerplate/templates/app.html'
 ], function ($, _, Backbone, Template) {
 
-    var view = Backbone.View.extend({
+    var View = Backbone.View.extend({
 
         events: {},
 
@@ -19,5 +19,5 @@ define([
 
     });
 
-    return view;
+    return View;
 });
