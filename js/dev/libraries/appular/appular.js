@@ -1,8 +1,8 @@
 // Appular Sites
-// version : 0.0.2
+// version : 0.0.3
 // author : Adam Draper
 // license : MIT
-// https://github.com/adamwdraper/Appular-Sites
+// https://github.com/adamwdraper/Appular
 require([
     'domReady!',
     'jquery',
@@ -31,9 +31,9 @@ require([
             });
         };
 
-    if (app) {
-        Backbone.on('app:initialized', renderModules);
+    Backbone.on('app:initialized', renderModules);
 
+    if (app) {
         require([
             'apps/' + app + '/app'
         ], function (App) {
@@ -44,6 +44,6 @@ require([
             app.render();
         });
     } else {
-        console.log('No App found.');
+        Backbone.trigger('app:initialized');
     }
 });
