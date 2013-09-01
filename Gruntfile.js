@@ -10,13 +10,18 @@ module.exports = function(grunt) {
         },
         sass: {
             dev: {
+                options: {
+                    style: 'expanded',
+                    noCache: true
+                },
                 files: {
                     'css/dev/style.css': 'scss/style.scss'
                 }
             },
             build: {
                 options: {
-                    style: 'compressed'
+                    style: 'compressed',
+                    noCache: true
                 },
                 files: {
                     'css/build/style.css': 'scss/style.scss'
