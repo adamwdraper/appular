@@ -1,19 +1,70 @@
 <div>
     {{#key_value docs}}
-        <h1>{{key}}</h1>
+        <!-- type -->
+        <h1 class="type">{{key}}</h1>
         {{#each value}}
-        <div>
-            <h2>{{name}}</h2>
-            {{#each extras}}
-            <div>
-                {{#each this}}
+        <div class="module">
+            <p class="title">
+                {{#if link}}
+                <a href="{{link}}" class="name">{{name}}</a>
+                {{else}}
+                <span class="name">{{name}}</span>
+                {{/if}}
+                <span class="version">{{version}}</span>
+                <span class="define">{{define}}</span>
+            </p>
+            <p class="description">
+                {{description}}
+            </p>
+            <div class="events">
+                {{#if events}}
+                <h4>Events</h4>
+                    {{#each events}}
+                    <p>
+                        <span>{{name}}</span> - {{description}}
+                    </p>
+                    {{/each}}
+                {{/if}}
+                {{#if functions}}
+                <h4>Functions</h4>
+                    {{#each functions}}
+                    <p>
+                        <span>{{name}}</span> - {{description}}
+                    </p>
+                    {{#if params}}
+                    <p>Paramaters</p>
+                    <ul>
+                        {{#each params}}
+                        <li>
+                            <span>{{name}}</span> - {{description}}
+                        </li>
+                        {{/each}}
+                    </ul>
+                    {{/if}}
+                    {{#if return}}
+                    <p>Returns</p>
+                    <ul>
+                        <li>
+                            <span>{{name}}</span> - {{description}}
+                        </li>
+                    </ul>
+                    {{/if}}
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+        {{#key_value extras}}
+        <div class="extras">
+            <h2>{{key}}</h2>
+            <div class="extra">
+                {{#each value}}
                 <div>
                     <h3>{{name}}</h3>                    
                 </div>
                 {{/each}}                
             </div>
-            {{/each}}
         </div>
+        {{/key_value}}
         {{/each}}
     {{/key_value}}
 </div>  

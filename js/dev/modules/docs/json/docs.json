@@ -9,7 +9,21 @@
                         "version": "v1.3",
                         "description": "jquery functions",
                         "link": "http://www.jqueryfunctions.com",
-                        "define": "libraries/jquery/extensions/functions"
+                        "define": "libraries/jquery/extensions/functions",
+                        "functions": [
+                            {
+                                "name": "each2",
+                                "description": "",
+                                "params": [
+                                    {
+                                        "name": "array",
+                                        "type": "array",
+                                        "description": "array to iterate over",
+                                        "isOptional": false
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ],
                 "plugins": [
@@ -18,13 +32,7 @@
                         "version": "v1.3",
                         "description": "",
                         "link": "http://www.jqueryhotkeys.com",
-                        "define": "something/something.htmlc",
-                        "functions": [
-                            {
-                                "name": "test",
-                                "description": "keyup events"
-                            }
-                        ]
+                        "define": "something/something.htmlc"
                     }
                 ]
             },
@@ -57,7 +65,28 @@
             "functions": [
                 {
                     "name": "ajax",
-                    "description": ""
+                    "description": "",
+                    "params": [
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "description": "the sting to manipulate",
+                            "isOptional": false
+                        },
+                        {
+                            "name": "data",
+                            "type": "object",
+                            "description": "data for request",
+                            "isOptional": true
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "name": "response",
+                            "type": "object",
+                            "description": "jquery data from request"
+                        }
+                    ]
                 }
             ],
             "events": [
@@ -76,8 +105,23 @@
             "define": "api",
             "functions": [
                 {
-                    "name": "ajax",
-                    "description": "make ajax call to api"
+                    "name": "titleize",
+                    "description": "title case a string",
+                    "params": [
+                        {
+                            "name": "title",
+                            "type": "string",
+                            "description": "the title to manipulate",
+                            "isOptional": false
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "name": "title",
+                            "type": "string",
+                            "description": ""
+                        }
+                    ]
                 },
                 {
                     "name": "data",

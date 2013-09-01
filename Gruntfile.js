@@ -15,7 +15,8 @@ module.exports = function(grunt) {
                     noCache: true
                 },
                 files: {
-                    'css/dev/style.css': 'scss/style.scss'
+                    'css/dev/style.css': 'scss/stylesheets/style.scss',
+                    'css/dev/docs.css': 'scss/stylesheets/docs.scss'
                 }
             },
             build: {
@@ -24,7 +25,8 @@ module.exports = function(grunt) {
                     noCache: true
                 },
                 files: {
-                    'css/build/style.css': 'scss/style.scss'
+                    'css/build/style.css': 'scss/stylesheets/style.scss',
+                    'css/build/docs.css': 'scss/stylesheets/docs.scss'
                 }
             }
         },

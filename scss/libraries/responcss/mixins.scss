@@ -1,0 +1,107 @@
+// Clearfix
+// For clearing floats like a boss h5bp.com/q
+@mixin clearfix {
+    zoom: 1;
+    
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+    }
+    
+    &:after {
+        clear: both;
+    }
+}
+
+// Media queries --------------------------------------------------
+@mixin target ($size, $max: false) {
+    $i: index($sizes, $size);
+    $min-width: nth($sizes-min-width, $i);
+    
+    @if $min-width == 0px {
+        $min-width: false;
+    }
+
+    @if $max == true {
+        $max-width: false;
+
+        @if $i + 1 <= length($sizes-min-width) {
+            $max-width: nth($sizes-min-width, ($i + 1)) - 1;
+        }
+
+        @if $min-width == false and $max-width {
+            @media only screen and (max-width: $max-width) {
+                @content
+            }
+        } @else if $min-width and $max-width {
+            @media only screen and (min-width: $min-width) and (max-width: $max-width) {
+                @content
+            }
+        } @else if $min-width and $max-width == false {
+            @media only screen and (min-width: $min-width) {
+                @content
+            }
+        }
+    } @else {
+        @if $min-width != false {
+            @media only screen and (min-width: $min-width) {
+                @content
+            }
+        } @else {
+            @media only screen {
+                @content
+            }
+        }
+    }
+}
+
+// Span base style --------------------------------------------
+@mixin span-width ($size-column-count, $span-column-count) {
+    $total-units: ($column-ratio + ($gutter-ratio * 2)) * $size-column-count;
+    $unit-percentage: (1 / $total-units) * 100%;
+    $column-width: $unit-percentage * $column-ratio;
+    $gutter-width: $unit-percentage * $gutter-ratio;
+        
+    @if $span-column-count > $size-column-count {
+        $span-column-count: $size-column-count;
+    }
+
+    width: ($column-width * $span-column-count) + (($span-column-count - 1) * ($gutter-width * 2));
+}
+
+@mixin span-margins ($size-column-count) {
+    $total-units: ($column-ratio + ($gutter-ratio * 2)) * $size-column-count;
+    $unit-percentage: (1 / $total-units) * 100%;
+    $gutter-width: $unit-percentage * $gutter-ratio;
+
+    margin-left: $gutter-width;
+    margin-right: $gutter-width;
+}
+
+// Full span style --------------------------------------------
+@mixin span-full-width ($size-column-count, $span-column-count) {
+    $total-units: ($column-ratio + ($gutter-ratio * 2)) * $size-column-count;
+    $unit-percentage: (1 / $total-units) * 100%;
+    $column-width: $unit-percentage * $column-ratio;
+    $gutter-width: $unit-percentage * $gutter-ratio;
+
+    @if $span-column-count > $size-column-count {
+        $span-column-count: $size-column-count;
+    }
+
+    width: ($column-width * $span-column-count) + (($span-column-count) * ($gutter-width * 2));
+}
+
+@mixin span-full-margins () {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@mixin span-padding ($size-column-count) {
+    $total-units: ($column-ratio + ($gutter-ratio * 2)) * $size-column-count;
+    $unit-percentage: (1 / $total-units) * 100%;
+    $gutter-width: $unit-percentage * $gutter-ratio;
+
+    padding: ($gutter-width * 2);
+}
