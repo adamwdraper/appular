@@ -1,4 +1,8 @@
-define([
+/**
+ * @appular demo
+ */
+
+ define([
     'jquery',
     'underscore',
     'backbone',

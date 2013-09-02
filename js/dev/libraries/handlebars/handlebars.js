@@ -1,3 +1,9 @@
+/**
+ * @appular handlebars v1.0.0
+ * @link http://handlebarsjs.com/
+ * @define handlebars
+ */
+
 /*
 
 Copyright (C) 2011 by Yehuda Katz

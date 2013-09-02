@@ -1,3 +1,8 @@
+/**
+ * @appular helpers v1.0.0
+ * @define handlebarsHelpers
+ */
+
 define([
     'handlebars'
 ], function (Handlebars) {

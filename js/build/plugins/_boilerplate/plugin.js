@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone","text!plugins/_boilerplate/teplates/plugin.html"],function(e,t,n,r){var i=n.View.extend({events:{},initialize:function(){},render:function(){return this.$el.html(t.template(r,{})),this}});return i});

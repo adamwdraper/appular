@@ -1,3 +1,8 @@
+/**
+ * @appular hbs v0.0.1 - include file as text and convert it to a handlebars template
+ * @define hbs!
+ */
+
 // hbtemplate.js plugin for requirejs / text.js
 // it loads and compiles Handlebars templates
 define([

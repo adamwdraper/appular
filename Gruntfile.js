@@ -61,7 +61,6 @@ module.exports = function(grunt) {
                 devel: false,
                 eqeqeq: true,
                 eqnull: true,
-                newcap: true,
                 noarg: true,
                 sub: true,
                 undef: true,
@@ -80,20 +79,20 @@ module.exports = function(grunt) {
                     paths: {
                         'jqueryLib': 'empty:',
                         'jquery': 'libraries/jquery/jquery',
-                        'jqueryFunctions': 'libraries/jquery/functions',
-                        'zeptoLib': 'empty:',
-                        'zepto': 'libraries/zepto/zepto',
-                        'zeptoFunctions': 'libraries/zepto/functions',
+                        'jqueryFunctions': 'libraries/jquery/extensions/functions',
                         'underscoreLib': 'libraries/underscore/underscore-1.5.1',
                         'underscore': 'libraries/underscore/underscore',
                         'backboneLib': 'libraries/backbone/backbone-1.0.0',
                         'backbone': 'libraries/backbone/backbone',
+                        'handlebars': 'libraries/handlebars/handlebars',
+                        'handlebarsHelpers': 'libraries/handlebars/helpers/helpers',
                         'moment': 'empty:',
                         'numeral': 'empty:',
                         'domReady': 'libraries/require/plugins/domReady',
                         'async': 'libraries/require/plugins/async',
                         'json': 'libraries/require/plugins/json',
-                        'text': 'libraries/require/plugins/text'
+                        'text': 'libraries/require/plugins/text',
+                        'hbs': 'libraries/require/plugins/hbs'
                     },
                     modules: [
                         {
@@ -105,12 +104,11 @@ module.exports = function(grunt) {
                                 'libraries/appular/appular',
                                 'jquery',
                                 'jqueryFunctions',
-                                'zepto',
-                                'zeptoFunctions',
                                 'underscore',
                                 'backbone',
                                 'domReady',
-                                'text'
+                                'text',
+                                'hbs'
                             ]
                         },
                         {
@@ -121,6 +119,12 @@ module.exports = function(grunt) {
                         },
                         {
                             name: 'modules/user-bar/module',
+                            exclude: [
+                                'appular'
+                            ]
+                        },
+                        {
+                            name: 'modules/docs/module',
                             exclude: [
                                 'appular'
                             ]
@@ -150,7 +154,7 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('build', 'Builds production SASS, hints and builds production JS', [
+    grunt.registerTask('build', 'Builds production SASS, hints and builds production JS, and builds js documentation json, ', [
         'sass:build',
         'jshint',
         'docs:build',

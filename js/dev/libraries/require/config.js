@@ -7,9 +7,6 @@ requirejs.config({
         'jqueryLib': 'libraries/jquery/jquery-1.10.2',
         'jquery': 'libraries/jquery/jquery',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
-        'zeptoLib': 'libraries/zepto/zepto-1.0',
-        'zepto': 'libraries/zepto/zepto',
-        'zeptoFunctions': 'libraries/zepto/functions',
         'underscoreLib': 'libraries/underscore/underscore-1.5.1',
         'underscore': 'libraries/underscore/underscore',
         'backboneLib': 'libraries/backbone/backbone-1.0.0',
@@ -26,7 +23,6 @@ requirejs.config({
     },
     deps: [
         'jqueryFunctions',
-        'handlebarsHelpers',
-        'zeptoFunctions'
+        'handlebarsHelpers'
     ]
 });

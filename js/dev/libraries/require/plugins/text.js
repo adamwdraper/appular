@@ -1,4 +1,9 @@
 /**
+ * @appular text v2.0.9 - include file as text
+ * @define text!
+ */
+
+/**
  * @license RequireJS text 2.0.9 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/requirejs/text for details

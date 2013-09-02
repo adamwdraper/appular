@@ -1,4 +1,8 @@
-define([
+/**
+ * @appular userBar
+ */
+
+ define([
     'jquery',
     'underscore',
     'backbone',

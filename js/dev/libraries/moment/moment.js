@@ -1,3 +1,9 @@
+/**
+ * @appular moment v2.0.0
+ * @link http://momentjs.com/
+ * @define moment
+ */
+
 // moment.js
 // version : 2.0.0
 // author : Tim Wood
