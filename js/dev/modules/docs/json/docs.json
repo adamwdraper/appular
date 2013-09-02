@@ -5,6 +5,7 @@
             "extras": {
                 "extensions": [
                     {
+                        "path": "libraries/jquery/extensions/functions.js",
                         "name": "jqueryFunctions",
                         "version": "v1.3",
                         "description": "jquery functions",
@@ -12,6 +13,7 @@
                         "define": "libraries/jquery/extensions/functions",
                         "functions": [
                             {
+                                "path": "libraries/jquery/extensions/functions.js",
                                 "name": "each2",
                                 "description": "",
                                 "params": [
@@ -28,6 +30,7 @@
                 ],
                 "plugins": [
                     {
+                        "path": "libraries/jquery/plugins/hotkey.js",
                         "name": "hotkeys",
                         "version": "v1.3",
                         "description": "",
@@ -36,6 +39,7 @@
                     }
                 ]
             },
+            "path": "libraries/jquery/jquery-1.10.2.js",
             "version": "v1.10.2",
             "description": "",
             "link": "http://www.jquery.com",
@@ -44,12 +48,14 @@
     ],
     "modules": [
         {
+            "path": "modules/user-bar/module.js",
             "name": "userBar",
             "version": "v0.1.0",
             "description": "makes calls to api and returns data to a callback",
             "define": "modules/user-bar/module",
             "events": [
                 {
+                    "path": "modules/user-bar/module.js",
                     "name": "dataChanged",
                     "description": "fired when any data is changed after initial load."
                 }
@@ -58,12 +64,14 @@
     ],
     "plugins": [
         {
+            "path": "plugins/photo/plugin.js",
             "name": "photo",
             "version": "v0.1.2",
             "description": "makes calls to api and returns data to a callback",
             "define": "plugins/photo/plugin",
             "functions": [
                 {
+                    "path": "plugins/photo/plugin.js",
                     "name": "ajax",
                     "description": "",
                     "params": [
@@ -91,6 +99,7 @@
             ],
             "events": [
                 {
+                    "path": "plugins/photo/plugin.js",
                     "name": "dataChanged",
                     "description": "fired when any data is changed after initial load."
                 }
@@ -99,12 +108,14 @@
     ],
     "utilities": [
         {
+            "path": "utilities/api/utility.js",
             "name": "api",
             "version": "v0.1.2",
             "description": "makes calls to api and returns data to a callback",
             "define": "api",
             "functions": [
                 {
+                    "path": "utilities/api/utility.js",
                     "name": "titleize",
                     "description": "title case a string",
                     "params": [
@@ -124,12 +135,14 @@
                     ]
                 },
                 {
+                    "path": "utilities/api/utility.js",
                     "name": "data",
                     "description": "datas"
                 }
             ],
             "events": [
                 {
+                    "path": "utilities/api/utility.js",
                     "name": "dataChanged",
                     "description": "fired when any data is changed after initial load"
                 }

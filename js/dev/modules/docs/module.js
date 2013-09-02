@@ -2,25 +2,34 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'json!modules/docs/json/docs.json',
+    'modules/docs/views/nav',
+    'modules/docs/views/docs',
     'hbs!modules/docs/templates/module.html'
-], function ($, _, Backbone, Docs, Template) {
+], function ($, _, Backbone, Nav, Docs,Template) {
 
-    var view = Backbone.View.extend({
+    var nav,
+        docs,
+        View = Backbone.View.extend({
 
             events: {},
 
             initialize: function() {},
 
             render: function() {
-                this.$el.html(Template({
-                    docs: Docs
-                }));
+                this.$el.html(Template());
+
+                nav = new Nav({
+                    el: '#module-docs-nav'
+                }).render();
+
+                docs = new Docs({
+                    el: '#module-docs-docs'
+                }).render();
 
                 return this;
             }
 
         });
 
-    return view;
+    return View;
 });
