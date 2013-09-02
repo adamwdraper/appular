@@ -1,0 +1,1 @@
+define("text!modules/user-bar/templates/module.html",[],function(){return"User Bar Module"}),define("modules/user-bar/module",["jquery","underscore","backbone","text!modules/user-bar/templates/module.html"],function(e,t,n,r){var i=n.View.extend({events:{},initialize:function(){},render:function(){return this.$el.html(t.template(r,{})),this}});return i});

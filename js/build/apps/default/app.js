@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(e,t,n){var r=n.View.extend({events:{},initialize:function(){},render:function(){return n.trigger("app:initialized"),this}});return r});
