@@ -4,8 +4,8 @@ define([
     'backbone',
     'json!../../../../../package.json',
     'json!modules/docs/json/docs.json',
-    'hbs!modules/docs/templates/docs.html'
-], function ($, _, Backbone, Package, Docs, Template) {
+    'text!modules/docs/templates/docs.html'
+], function ($, _, Backbone, packageJson, Docs, template) {
 
     var view = Backbone.View.extend({
 
@@ -14,10 +14,10 @@ define([
             initialize: function() {},
 
             render: function() {
-                this.$el.html(Template({
+                this.$el.html(_.template(template({
                     docs: Docs,
-                    codeUrl: Package.repository.url.match(/:([^.]+)/)[1]
-                }));
+                    codeUrl: packageJson.repository.url.match(/:([^.]+)/)[1]
+                })));
 
                 return this;
             }

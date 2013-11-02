@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'json!modules/docs/json/docs.json',
-    'hbs!modules/docs/templates/nav.html'
+    'text!modules/docs/templates/nav.html'
 ], function ($, _, Backbone, Docs, Template) {
 
     var view = Backbone.View.extend({

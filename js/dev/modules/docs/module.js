@@ -8,8 +8,8 @@ define([
     'backbone',
     'modules/docs/views/nav',
     'modules/docs/views/docs',
-    'hbs!modules/docs/templates/module.html'
-], function ($, _, Backbone, Nav, Docs,Template) {
+    'text!modules/docs/templates/module.html'
+], function ($, _, Backbone, Nav, Docs, template) {
 
     var nav,
         docs,
@@ -20,7 +20,7 @@ define([
             initialize: function() {},
 
             render: function() {
-                this.$el.html(Template());
+                this.$el.html(_.template(template()));
 
                 nav = new Nav({
                     el: '#module-docs-nav'

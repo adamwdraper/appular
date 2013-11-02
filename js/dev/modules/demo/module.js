@@ -6,23 +6,16 @@
     'jquery',
     'underscore',
     'backbone',
-    'modules/demo/router',
     'text!modules/demo/templates/module.html'
-], function ($, _, Backbone, Router, Template) {
-
+], function ($, _, Backbone, template) {
     var view = Backbone.View.extend({
-
-        events: {},
-
-        initialize: function() {},
-
-        render: function() {
-            this.$el.html(_.template(Template, {}));
-
-            return this;
-        }
-
-    });
+            events: {},
+            initialize: function() {},
+            render: function() {
+                this.$el.html(_.template(template, {}));
+                return this;
+            }
+        });
 
     return view;
 });

@@ -61,7 +61,6 @@ module.exports = function(grunt) {
                             name: 'appular',
                             include: [
                                 'modernizr',
-                                'libraries/modernizr/modernizr-2.6.3',
                                 'libraries/require/require-2.1.9',
                                 'libraries/require/config-build',
                                 'libraries/appular/appular',
