@@ -5,28 +5,43 @@
 // https://github.com/adamwdraper/Appular-Sites
 require([
     'domReady!',
-    '{%= $ %}',
+    'jquery',
     'underscore',
     'backbone'
 ], function (doc, $, _, Backbone) {
     var $modules = $('[data-appular-module]'),
         startHistory = _.after($modules.length, function () {
-            Backbone.history.start();
-        });
+            Backbone.history.start({
+                pushState: true
+            });
+        }),
+        renderModules = function () {
+            _.each($modules, function (element) {
+                var $element = $(element),
+                    options = {
+                        el: $element
+                    };
+
+                _.each($element.data(), function (value, key) {
+                    if (key !== 'appularModule') {
+                        options[key] = value;
+                    }
+                });
+
+                require([
+                    'modules/' + $element.data('appularModule') + '/module'
+                ], function (Module) {
+                    var module = new Module(options);
+                    
+                    module.plugins = [];
+                    module.render();
+
+                    startHistory();
+                });
+            });
+        };
 
     if ($modules.length) {
-        $.each($modules, function (index, element) {
-            require([
-                'modules/' + $(element).data('appular-module') + '/module'
-            ], function (Module) {
-                var module = new Module({
-                    el: $(element)
-                });
-                module.render();
-                startHistory();
-            });
-        });
-    } else {
-        console.log('No module element found.');
+        renderModules();
     }
 });

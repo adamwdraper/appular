@@ -4,25 +4,20 @@
 requirejs.config({
     baseUrl: '/js/build',
     paths: {
-        'jqueryLib': [
+        'jquery': [
             '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
             'libraries/jquery/jquery-1.10.2'
         ],
-        'zeptoLib': [
-            '//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min',
-            'libraries/jquery/jquery-1.0'
-        ],
         'moment': [
-            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min',
-            'libraries/moment/moment'
+            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min',
+            'libraries/moment/moment-2.4.0'
         ],
         'numeral': [
-            '//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min',
-            'libraries/numeral/numeral'
+            '//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.0/numeral.min',
+            'libraries/numeral/numeral-1.5.2'
         ]
     },
     deps: [
-        'jqueryFunctions',
-        'zeptoFunctions'
+        'jqueryFunctions'
     ]
 });

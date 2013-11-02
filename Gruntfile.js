@@ -3,32 +3,6 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        open : {
-            dev : {
-                path: 'http://127.0.0.1:8888/'
-            }
-        },
-        sass: {
-            dev: {
-                files: {
-                    'css/dev/style.css': 'scss/style.scss'
-                }
-            },
-            build: {
-                options: {
-                    style: 'compressed'
-                },
-                files: {
-                    'css/build/style.css': 'scss/style.scss'
-                }
-            }
-        },
-        watch: {
-            files: 'scss/**/*',
-            tasks: [
-                'sass:dev'
-            ]
-        },
         jshint: {
             all: [
                 'js/dev/modules/**/*.js',
@@ -59,16 +33,10 @@ module.exports = function(grunt) {
                     baseUrl: 'js/dev',
                     dir: 'js/build',
                     paths: {
-                        'jqueryLib': 'empty:',
-                        'jquery': 'libraries/jquery/jquery',
-                        'jqueryFunctions': 'libraries/jquery/functions',
-                        'zeptoLib': 'empty:',
-                        'zepto': 'libraries/zepto/zepto',
-                        'zeptoFunctions': 'libraries/zepto/functions',
-                        'underscoreLib': 'libraries/underscore/underscore-1.4.4',
-                        'underscore': 'libraries/underscore/underscore',
-                        'backboneLib': 'libraries/backbone/backbone-1.0.0',
-                        'backbone': 'libraries/backbone/backbone',
+                        'jquery': 'empty:',
+                        'jqueryFunctions': 'libraries/jquery/extensions/functions',
+                        'underscore': 'libraries/underscore/underscore-1.5.0',
+                        'backbone': 'libraries/backbone/backbone-1.0.0',
                         'moment': 'empty:',
                         'numeral': 'empty:',
                         'domReady': 'libraries/require/plugins/domReady',
@@ -81,13 +49,11 @@ module.exports = function(grunt) {
                             name: 'appular',
                             include: [
                                 'libraries/modernizr/modernizr',
-                                'libraries/require/require',
+                                'libraries/require/require-2.1.9',
                                 'libraries/require/config-build',
                                 'libraries/appular/appular',
                                 'jquery',
                                 'jqueryFunctions',
-                                'zepto',
-                                'zeptoFunctions',
                                 'underscore',
                                 'backbone',
                                 'domReady',
