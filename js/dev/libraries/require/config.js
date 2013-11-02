@@ -2,8 +2,9 @@
  * Dev Config Settings
  */
 requirejs.config({
-    baseUrl: 'js/dev',
+    baseUrl: '/js/dev',
     paths: {
+        'modernizr': 'libraries/modernizr/modernizr-2.6.3',
         'jquery': 'libraries/jquery/jquery-1.10.2',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
         'underscore': 'libraries/underscore/underscore-1.5.0',
@@ -16,6 +17,7 @@ requirejs.config({
         'text': 'libraries/require/plugins/text'
     },
     deps: [
+        'modernizr',
         'jqueryFunctions'
     ]
 });
