@@ -11,9 +11,7 @@ define([
             '': 'index'
         },
 
-        index: function () {
-            console.log('index');
-        }
+        index: function () {}
 
     });
 

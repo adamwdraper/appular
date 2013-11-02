@@ -1,3 +1,9 @@
+/**
+ * @appular numeral v1.4.8
+ * @link http://numeraljs.com/
+ * @define numeral
+ */
+
 /*!
  * numeral.js
  * version : 1.5.2

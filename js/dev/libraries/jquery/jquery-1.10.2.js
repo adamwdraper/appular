@@ -1,3 +1,9 @@
+/**
+ * @appular jQuery v1.10.2
+ * @link http://jquery.com/
+ * @define jquery
+ */
+
 /*!
  * jQuery JavaScript Library v1.10.2
  * http://jquery.com/

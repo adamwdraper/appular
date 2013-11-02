@@ -1,25 +1,27 @@
-define([
+/**
+ * @appular userBar
+ */
+
+ define([
     'jquery',
     'underscore',
     'backbone',
     'text!modules/user-bar/templates/module.html'
 ], function ($, _, Backbone, Template) {
 
-    var View = Backbone.View.extend({
+    var view = Backbone.View.extend({
 
         events: {},
 
-        initialize: function() {
-            _.bindAll(this);
-        },
+        initialize: function() {},
 
         render: function(){
-            $(this.el).html(_.template(Template, {}));
+            this.$el.html(_.template(Template, {}));
 
             return this;
         }
 
     });
 
-    return View;
+    return view;
 });

@@ -1,0 +1,1 @@
+define(["handlebars"],function(e){e.registerHelper("key_value",function(e,t){var n="",r;for(r in e)e.hasOwnProperty(r)&&(n+=t.fn({key:r,value:e[r]}));return n}),e.registerHelper("each_with_key",function(e,t){var n,r="",i,s=t.hash.key;for(i in e)e.hasOwnProperty(i)&&(n=e[i],s&&(n[s]=i),r+=t(n));return r})});

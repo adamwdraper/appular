@@ -1,3 +1,8 @@
+/**
+ * @appular json v0.3.0 - include file as json
+ * @define json!
+ */
+
 /** @license
  * RequireJS plugin for loading JSON files
  * - depends on Text plugin and it was HEAVILY "inspired" by it as well.

@@ -3,6 +3,18 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        docs: {
+            build: {
+                options: {
+                    pretty: true
+                },
+                files: {
+                    'js/dev/modules/docs/json/docs.json': [
+                        'js/dev/**/*.js'
+                    ]
+                }
+            }
+        },
         jshint: {
             all: [
                 'js/dev/modules/**/*.js',
@@ -16,7 +28,6 @@ module.exports = function(grunt) {
                 devel: false,
                 eqeqeq: true,
                 eqnull: true,
-                newcap: true,
                 noarg: true,
                 sub: true,
                 undef: true,
@@ -33,6 +44,7 @@ module.exports = function(grunt) {
                     baseUrl: 'js/dev',
                     dir: 'js/build',
                     paths: {
+                        'modernizr': 'libraries/modernizr/modernizr-2.6.3',
                         'jquery': 'empty:',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
                         'underscore': 'libraries/underscore/underscore-1.5.0',
@@ -48,7 +60,8 @@ module.exports = function(grunt) {
                         {
                             name: 'appular',
                             include: [
-                                'libraries/modernizr/modernizr',
+                                'modernizr',
+                                'libraries/modernizr/modernizr-2.6.3',
                                 'libraries/require/require-2.1.9',
                                 'libraries/require/config-build',
                                 'libraries/appular/appular',
@@ -71,6 +84,12 @@ module.exports = function(grunt) {
                             exclude: [
                                 'appular'
                             ]
+                        },
+                        {
+                            name: 'modules/docs/module',
+                            exclude: [
+                                'appular'
+                            ]
                         }
                     ],
                     removeCombined: true
@@ -79,20 +98,17 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-open');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-appular-docs');
 
     grunt.registerTask('default', [
-        'open:dev',
-        'watch'
+        'build'
     ]);
 
-    grunt.registerTask('release', [
-        'sass:build',
+    grunt.registerTask('build', 'Builds hints and builds production JS, and builds js documentation json', [
         'jshint',
+        'docs:build',
         'requirejs'
     ]);
 };

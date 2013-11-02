@@ -1,0 +1,13 @@
+// Sizes --------------------------------------------------
+$sizes: 's', 'm', 'l';
+$size-columns: 4, 8, 12;
+$sizes-min-width: 0px, 768px, 980px;
+
+// Grid Ratios  ---------------------------------------------------
+$column-ratio: 6;
+$gutter-ratio: 1;
+
+// Spans  ---------------------------------------------------
+$span-prefix: 'span';
+$span-full-suffix: 'full';
+$span-padding-suffix: 'pad';

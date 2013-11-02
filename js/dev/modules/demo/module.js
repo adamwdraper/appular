@@ -1,4 +1,8 @@
-define([
+/**
+ * @appular demo
+ */
+
+ define([
     'jquery',
     'underscore',
     'backbone',
@@ -6,13 +10,11 @@ define([
     'text!modules/demo/templates/module.html'
 ], function ($, _, Backbone, Router, Template) {
 
-    var View = Backbone.View.extend({
+    var view = Backbone.View.extend({
 
         events: {},
 
-        initialize: function() {
-            _.bindAll(this);
-        },
+        initialize: function() {},
 
         render: function() {
             this.$el.html(_.template(Template, {}));
@@ -22,5 +24,5 @@ define([
 
     });
 
-    return View;
+    return view;
 });

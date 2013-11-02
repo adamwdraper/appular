@@ -1,8 +1,8 @@
 // Appular Sites
-// version : 0.0.1
+// version : 1.0.0
 // author : Adam Draper
 // license : MIT
-// https://github.com/adamwdraper/Appular-Sites
+// https://github.com/adamwdraper/Appular
 require([
     'domReady!',
     'jquery',

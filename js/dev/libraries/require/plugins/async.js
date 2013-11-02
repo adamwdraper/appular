@@ -1,8 +1,3 @@
-/**
-@appular {plugin} async - include async files in module definition with async!
-    @parent {library} require
-*/
-
 /** @license
  * RequireJS plugin for async dependency load like JSONP and Google Maps
  * Author: Miller Medeiros

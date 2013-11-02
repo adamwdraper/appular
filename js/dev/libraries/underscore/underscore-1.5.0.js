@@ -1,3 +1,9 @@
+/**
+ * @appular underscore v1.5.0
+ * @link http://documentcloud.github.io/underscore/
+ * @define underscore
+ */
+
 //     Underscore.js 1.5.0
 //     http://underscorejs.org
 //     (c) 2009-2011 Jeremy Ashkenas, DocumentCloud Inc.

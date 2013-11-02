@@ -1,7 +1,16 @@
-// Filename: libraries/jquery/functions.js
+/**
+ * @appular functions
+ * @define jqueryFunctions
+ */
+
 define([
     'jquery'
 ], function ($) {
+    /**
+     * @function toggleText - toogles the text of an element between two values
+     * @param value1:string
+     * @param value1:string
+     */
     $.fn.toggleText = function (value1, value2) {
         return this.each(function () {
             var $this = $(this),

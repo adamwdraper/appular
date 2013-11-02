@@ -1,3 +1,9 @@
+/**
+ * @appular moment v2.0.0
+ * @link http://momentjs.com/
+ * @define moment
+ */
+
 //! moment.js
 //! version : 2.4.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors

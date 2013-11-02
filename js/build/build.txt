@@ -8,13 +8,15 @@ libraries/require/config-build.js
 libraries/require/plugins/domReady.js
 domReady!
 libraries/jquery/jquery.js
-libraries/underscore/underscore-1.4.4.js
+libraries/underscore/underscore-1.5.1.js
 libraries/underscore/underscore.js
 libraries/backbone/backbone-1.0.0.js
 libraries/backbone/backbone.js
 libraries/appular/appular.js
-libraries/jquery/functions.js
+libraries/jquery/extensions/functions.js
 libraries/require/plugins/text.js
+libraries/handlebars/handlebars.js
+libraries/require/plugins/hbs.js
 
 modules/demo/module.js
 ----------------
@@ -26,3 +28,18 @@ modules/user-bar/module.js
 ----------------
 text!modules/user-bar/templates/module.html
 modules/user-bar/module.js
+
+modules/docs/module.js
+----------------
+libraries/require/plugins/json.js
+json!modules/docs/json/docs.json
+text!modules/docs/templates/nav.html
+hbs!modules/docs/templates/nav.html
+modules/docs/views/nav.js
+json!../../../../../package.json
+text!modules/docs/templates/docs.html
+hbs!modules/docs/templates/docs.html
+modules/docs/views/docs.js
+text!modules/docs/templates/module.html
+hbs!modules/docs/templates/module.html
+modules/docs/module.js
