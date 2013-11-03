@@ -53,6 +53,10 @@ Appular can generate documentation code for your project with its [grunt plugin]
 - uses r.js to create production build of javascript
 
 
+## Example Project
+Here is an [example project using Node and Express.js](https://github.com/adamwdraper/appular-express-app)
+
+
 ## Readiness
 
 Appular has been used on several large and small web apps and has made life a whole lot easier for both me and my team that's why I'm sharing.
