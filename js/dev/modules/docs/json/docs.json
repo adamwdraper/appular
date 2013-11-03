@@ -135,5 +135,88 @@
             "description": "",
             "define": "modules/user-bar/module"
         }
+    ],
+    "utilities": [
+        {
+            "path": "utilities/cookies/utility.js",
+            "name": "cookies",
+            "version": "v1.0.0",
+            "description": "Helper to create and update cookies",
+            "define": "utilities/cookies/utility",
+            "functions": [
+                {
+                    "path": "utilities/cookies/utility.js",
+                    "name": "set",
+                    "description": "set a cookie",
+                    "params": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "description": "value of cookie",
+                            "isOptional": false
+                        },
+                        {
+                            "name": "options",
+                            "type": "object",
+                            "description": "path, domain, expires, encode",
+                            "isOptional": true
+                        }
+                    ]
+                },
+                {
+                    "path": "utilities/cookies/utility.js",
+                    "name": "get",
+                    "description": "get a cookie value",
+                    "params": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "",
+                            "isOptional": false
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "description": "returns string if cookie exists, null if it doesn't"
+                        }
+                    ]
+                },
+                {
+                    "path": "utilities/cookies/utility.js",
+                    "name": "expire",
+                    "description": "expire a cookie",
+                    "params": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "",
+                            "isOptional": false
+                        }
+                    ]
+                },
+                {
+                    "path": "utilities/cookies/utility.js",
+                    "name": "isEnabled",
+                    "description": "check if cookies are enabled",
+                    "params": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "description": "",
+                            "isOptional": false
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "name": "isEnabled",
+                            "type": "boolean",
+                            "description": "true if cookies are enabled"
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }
