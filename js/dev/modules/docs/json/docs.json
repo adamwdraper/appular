@@ -9,25 +9,6 @@
             "define": "backbone"
         },
         {
-            "path": "libraries/handlebars/handlebars.js",
-            "name": "handlebars",
-            "version": "v1.0.0",
-            "description": "",
-            "link": "http://handlebarsjs.com/",
-            "define": "handlebars",
-            "extras": {
-                "helpers": [
-                    {
-                        "path": "libraries/handlebars/helpers/helpers.js",
-                        "name": "helpers",
-                        "version": "v1.0.0",
-                        "description": "",
-                        "define": "handlebarsHelpers"
-                    }
-                ]
-            }
-        },
-        {
             "name": "jQuery",
             "extras": {
                 "extensions": [
@@ -93,13 +74,6 @@
                         "version": "v2.0.1",
                         "description": "execute after dom is ready",
                         "define": "domReady!"
-                    },
-                    {
-                        "path": "libraries/require/plugins/hbs.js",
-                        "name": "hbs",
-                        "version": "v0.0.1",
-                        "description": "include file as text and convert it to a handlebars template",
-                        "define": "hbs!"
                     },
                     {
                         "path": "libraries/require/plugins/json.js",

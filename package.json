@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "repository": {
     "type": "git",
-    "url": "git@github.com:adamwdraper/Appular.git"
+    "url": "git@github.com:adamwdraper/appular.git"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -12,7 +12,5 @@
     "grunt-appular-docs": ">=0.1.0"
   },
   "dependencies": {
-    "underscore.string": "~2.3.3",
-    "grunt-appular-docs": "~0.1.3"
   }
 }

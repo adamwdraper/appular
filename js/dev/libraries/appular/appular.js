@@ -33,7 +33,11 @@ require([
                 ], function (Module) {
                     var module = new Module(options);
                     
-                    module.plugins = [];
+                    module.plugins = {};
+                    module.views = {};
+                    module.models = {};
+                    module.collections = {};
+                    
                     module.render();
 
                     startHistory();

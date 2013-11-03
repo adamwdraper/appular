@@ -18,6 +18,7 @@ requirejs.config({
         ]
     },
     deps: [
+        'modernizr',
         'jqueryFunctions'
     ]
 });
