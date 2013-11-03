@@ -10,7 +10,7 @@ define([
                 padding: 500
             },
             initialize: function () {
-                _.bindAll(this);
+                _.bindAll(this, 'nearBottom', 'reset');
 
                 this.on('nearBottom', this.nearBottom);
                 this.on('reset', this.reset);
