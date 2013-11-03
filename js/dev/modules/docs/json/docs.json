@@ -9,25 +9,6 @@
             "define": "backbone"
         },
         {
-            "path": "libraries/handlebars/handlebars.js",
-            "name": "handlebars",
-            "version": "v1.0.0",
-            "description": "",
-            "link": "http://handlebarsjs.com/",
-            "define": "handlebars",
-            "extras": {
-                "helpers": [
-                    {
-                        "path": "libraries/handlebars/helpers/helpers.js",
-                        "name": "helpers",
-                        "version": "v1.0.0",
-                        "description": "",
-                        "define": "handlebarsHelpers"
-                    }
-                ]
-            }
-        },
-        {
             "name": "jQuery",
             "extras": {
                 "extensions": [
@@ -68,7 +49,7 @@
             "define": "jquery"
         },
         {
-            "path": "libraries/moment/moment.js",
+            "path": "libraries/moment/moment-2.4.0.js",
             "name": "moment",
             "version": "v2.0.0",
             "description": "",
@@ -76,7 +57,7 @@
             "define": "moment"
         },
         {
-            "path": "libraries/numeral/numeral.js",
+            "path": "libraries/numeral/numeral-1.5.2.js",
             "name": "numeral",
             "version": "v1.4.8",
             "description": "",
@@ -95,13 +76,6 @@
                         "define": "domReady!"
                     },
                     {
-                        "path": "libraries/require/plugins/hbs.js",
-                        "name": "hbs",
-                        "version": "v0.0.1",
-                        "description": "include file as text and convert it to a handlebars template",
-                        "define": "hbs!"
-                    },
-                    {
                         "path": "libraries/require/plugins/json.js",
                         "name": "json",
                         "version": "v0.3.0",
@@ -117,22 +91,29 @@
                     }
                 ]
             },
-            "path": "libraries/require/require.js",
-            "version": "v2.1.8",
+            "path": "libraries/require/require-2.1.9.js",
+            "version": "v2.1.9",
             "description": "",
             "link": "http://requirejs.com/",
             "define": "require"
         },
         {
-            "path": "libraries/underscore/underscore-1.5.1.js",
+            "path": "libraries/underscore/underscore-1.5.0.js",
             "name": "underscore",
-            "version": "v1.5.1",
+            "version": "v1.5.0",
             "description": "",
             "link": "http://documentcloud.github.io/underscore/",
             "define": "underscore"
         }
     ],
     "modules": [
+        {
+            "path": "modules/_boilerplate/module.js",
+            "name": "boilerplate",
+            "version": "",
+            "description": "",
+            "define": "modules/_boilerplate/module"
+        },
         {
             "path": "modules/demo/module.js",
             "name": "demo",

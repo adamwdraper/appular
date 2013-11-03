@@ -1,7 +1,7 @@
 <ul>
-    {{#key_value docs}}
+    <% _.each(docs, function (value, key) { %>
     <li>
-        <a href="#{{key}}">{{key}}</a>
+        <a href="#<%= key %>"><%= key %></a>
     </li>
-    {{/key_value}}
+    <% }); %>
 </ul>

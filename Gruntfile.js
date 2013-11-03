@@ -3,39 +3,6 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        open : {
-            dev : {
-                path: 'http://127.0.0.1:8888/'
-            }
-        },
-        sass: {
-            dev: {
-                options: {
-                    style: 'expanded',
-                    noCache: true
-                },
-                files: {
-                    'css/dev/style.css': 'scss/stylesheets/style.scss',
-                    'css/dev/docs.css': 'scss/stylesheets/docs.scss'
-                }
-            },
-            build: {
-                options: {
-                    style: 'compressed',
-                    noCache: true
-                },
-                files: {
-                    'css/build/style.css': 'scss/stylesheets/style.scss',
-                    'css/build/docs.css': 'scss/stylesheets/docs.scss'
-                }
-            }
-        },
-        watch: {
-            files: 'scss/**/*',
-            tasks: [
-                'sass:dev'
-            ]
-        },
         docs: {
             build: {
                 options: {
@@ -77,29 +44,24 @@ module.exports = function(grunt) {
                     baseUrl: 'js/dev',
                     dir: 'js/build',
                     paths: {
-                        'jqueryLib': 'empty:',
-                        'jquery': 'libraries/jquery/jquery',
+                        'modernizr': 'libraries/modernizr/modernizr-2.6.3',
+                        'jquery': 'empty:',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
-                        'underscoreLib': 'libraries/underscore/underscore-1.5.1',
-                        'underscore': 'libraries/underscore/underscore',
-                        'backboneLib': 'libraries/backbone/backbone-1.0.0',
-                        'backbone': 'libraries/backbone/backbone',
-                        'handlebars': 'libraries/handlebars/handlebars',
-                        'handlebarsHelpers': 'libraries/handlebars/helpers/helpers',
+                        'underscore': 'libraries/underscore/underscore-1.5.0',
+                        'backbone': 'libraries/backbone/backbone-1.0.0',
                         'moment': 'empty:',
                         'numeral': 'empty:',
                         'domReady': 'libraries/require/plugins/domReady',
                         'async': 'libraries/require/plugins/async',
                         'json': 'libraries/require/plugins/json',
-                        'text': 'libraries/require/plugins/text',
-                        'hbs': 'libraries/require/plugins/hbs'
+                        'text': 'libraries/require/plugins/text'
                     },
                     modules: [
                         {
                             name: 'appular',
                             include: [
-                                'libraries/modernizr/modernizr',
-                                'libraries/require/require',
+                                'modernizr',
+                                'libraries/require/require-2.1.9',
                                 'libraries/require/config-build',
                                 'libraries/appular/appular',
                                 'jquery',
@@ -107,8 +69,7 @@ module.exports = function(grunt) {
                                 'underscore',
                                 'backbone',
                                 'domReady',
-                                'text',
-                                'hbs'
+                                'text'
                             ]
                         },
                         {
@@ -136,26 +97,15 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-open');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-appular-docs');
 
-    grunt.registerTask('default', 'Builds dev SASS, opens browser window with dev url, and starts SASS watch', [
-        'sass:dev',
-        'open:dev',
-        'watch'
+    grunt.registerTask('default', [
+        'build'
     ]);
 
-    grunt.registerTask('dev', 'Builds dev SASS and starts SASS watch', [
-        'sass:dev',
-        'watch'
-    ]);
-
-    grunt.registerTask('build', 'Builds production SASS, hints and builds production JS, and builds js documentation json, ', [
-        'sass:build',
+    grunt.registerTask('build', 'Builds hints and builds production JS, and builds js documentation json', [
         'jshint',
         'docs:build',
         'requirejs'

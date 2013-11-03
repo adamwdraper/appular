@@ -1,0 +1,44 @@
+<div class="content">
+    <p class="title">
+        <% if (typeof link !== 'undefined') { %>
+        <a href="<%= link %>" class="name"><%= name %></a>
+        <% } else { %>
+        <span class="name"><%= name %></span>
+        <% } %>
+        <% if (typeof version !== 'undefined') { %>
+        <span class="version"><%= version %></span>
+        <% } %>
+        <span class="define">define( <%= define %> )</span>
+    </p>
+    <% if (typeof description !== 'undefined') { %>
+    <p class="description">
+        <%= description %>
+    </p>
+    <% } %>
+    <p>
+        <a href="<%= jsRepoUrl %>/js/dev/<%= path %>" target="_blank">View Code</a>
+    </p>
+    <% if (typeof events !== 'undefined') { %>
+    <h4>Events</h4>
+    <% _.each(events, function (e) {
+        print(_.template(templates.e, e));
+    }); %> 
+    <% } %>
+    <% if (typeof functions !== 'undefined') { %>
+    <h4>Functions</h4>
+    <% _.each(functions, function (func) {
+        print(_.template(templates.func, func));
+    }); %> 
+    <% } %>
+    <% if (typeof extras !== 'undefined') {
+    _.each(extras, function (extra, key) { %>
+        <h4><%= key %></h4>
+        <% 
+        _.each(extra, function (ext, key) {
+            ext.templates = templates;
+            ext.jsRepoUrl = jsRepoUrl;
+            print(_.template(templates.doc, ext));
+        }); 
+    }); %> 
+    <% } %>
+</div>

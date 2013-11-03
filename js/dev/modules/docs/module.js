@@ -8,31 +8,24 @@ define([
     'backbone',
     'modules/docs/views/nav',
     'modules/docs/views/docs',
-    'hbs!modules/docs/templates/module.html'
-], function ($, _, Backbone, Nav, Docs,Template) {
-
-    var nav,
-        docs,
-        View = Backbone.View.extend({
-
+    'text!modules/docs/templates/module.html'
+], function ($, _, Backbone, Nav, Docs, template) {
+    var View = Backbone.View.extend({
             events: {},
-
-            initialize: function() {},
-
-            render: function() {
-                this.$el.html(Template());
-
-                nav = new Nav({
+            initialize: function () {},
+            render: function () {
+                this.$el.html(_.template(template));
+                
+                this.views.nav = new Nav({
                     el: '#module-docs-nav'
                 }).render();
 
-                docs = new Docs({
+                this.views.docs = new Docs({
                     el: '#module-docs-docs'
                 }).render();
 
                 return this;
             }
-
         });
 
     return View;

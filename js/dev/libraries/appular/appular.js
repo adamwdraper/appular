@@ -1,5 +1,5 @@
 // Appular Sites
-// version : 0.0.3
+// version : 1.0.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -9,41 +9,43 @@ require([
     'underscore',
     'backbone'
 ], function (doc, $, _, Backbone) {
-    var app = $('body').data('appular-app'),
-        $modules = $('[data-appular-module]'),
+    var $modules = $('[data-appular-module]'),
         startHistory = _.after($modules.length, function () {
             Backbone.history.start({
                 pushState: true
             });
         }),
         renderModules = function () {
-            $.each($modules, function (index, element) {
+            _.each($modules, function (element) {
+                var $element = $(element),
+                    options = {
+                        el: $element
+                    };
+
+                _.each($element.data(), function (value, key) {
+                    if (key !== 'appularModule') {
+                        options[key] = value;
+                    }
+                });
+
                 require([
-                    'modules/' + $(element).data('appular-module') + '/module'
+                    'modules/' + $element.data('appularModule') + '/module'
                 ], function (Module) {
-                    var module = new Module({
-                        el: $(element),
-                        app: app
-                    });
+                    var module = new Module(options);
+                    
+                    module.plugins = {};
+                    module.views = {};
+                    module.models = {};
+                    module.collections = {};
+                    
                     module.render();
+
                     startHistory();
                 });
             });
         };
 
-    Backbone.on('app:initialized', renderModules);
-
-    if (app) {
-        require([
-            'apps/' + app + '/app'
-        ], function (App) {
-            var app = new App({
-                    el: $('body')
-                });
-
-            app.render();
-        });
-    } else {
-        Backbone.trigger('app:initialized');
+    if ($modules.length) {
+        renderModules();
     }
 });

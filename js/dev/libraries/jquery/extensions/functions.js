@@ -3,7 +3,7 @@
  * @define jqueryFunctions
  */
 
- define([
+define([
     'jquery'
 ], function ($) {
     /**
