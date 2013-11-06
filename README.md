@@ -14,7 +14,7 @@ Appular isn't really a framework.  It does a couple of nice things, like loading
 In Appular there are 3 different types of modules.
 
 ### Modules
-These can be full fledged Backbone apps or a single Backbone View.  Modules are bound to dom elements by adding a `data-appular-module="module-name"` attribute to the element.
+Modules are Backbone Views that represet an element on the page.  They are meant to be reusable, and to function independent of any other modules on the page.
 
 ### Plugins
 Plugins are used by modules and are meant for very specific functionality that you are using in several modules.  Use them for tasks like long-polling or watching for infinite scrolling.  Ideally these are kept small and dumb. (i.e. they do their work, trigger events when necessary, and modules react to those events)
@@ -39,10 +39,17 @@ Included these scripts based on environment.  This way debuging is easy since no
 
 Then add data attributes to elements that you want to attach modules too, and Appular will load them for you.
 ```
-<div data-appular-module="user-bar"></div>
+<div data-appular-module="feed"></div>
 ```
 
-## Documentation
+Use additional data attributes to pass options to modules.
+```
+<div data-appular-module="feed" data-count="10"></div>
+```
+
+Count would then be available in the module as `this.options.count`
+
+## Project Documentation
 
 Appular can generate documentation code for your project with its [grunt plugin](https://github.com/adamwdraper/grunt-appular-docs).
 
@@ -52,10 +59,8 @@ Appular can generate documentation code for your project with its [grunt plugin]
 - creates documentation json with grunt-appular-docs plugin
 - uses r.js to create production build of javascript
 
-
 ## Example Project
 Here is an [example project using Node and Express.js](https://github.com/adamwdraper/appular-express-app)
-
 
 ## Readiness
 
