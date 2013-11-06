@@ -49,6 +49,7 @@ module.exports = function(grunt) {
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
                         'underscore': 'libraries/underscore/underscore-1.5.0',
                         'backbone': 'libraries/backbone/backbone-1.0.0',
+                        'backboneStickit': 'libraries/backbone/extensions/stickit',
                         'moment': 'empty:',
                         'numeral': 'empty:',
                         'domReady': 'libraries/require/plugins/domReady',
@@ -68,6 +69,7 @@ module.exports = function(grunt) {
                                 'jqueryFunctions',
                                 'underscore',
                                 'backbone',
+                                'backboneStickit',
                                 'domReady',
                                 'text'
                             ]
