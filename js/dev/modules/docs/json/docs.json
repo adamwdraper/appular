@@ -6,7 +6,19 @@
             "version": "v1.0.0",
             "description": "",
             "link": "http://documentcloud.github.io/backbone/",
-            "define": "backbone"
+            "define": "backbone",
+            "extras": {
+                "extensions": [
+                    {
+                        "path": "libraries/backbone/extensions/stickit.js",
+                        "name": "stickit",
+                        "version": "",
+                        "description": "",
+                        "define": "backboneStickit",
+                        "link": "http://nytimes.github.io/backbone.stickit/"
+                    }
+                ]
+            }
         },
         {
             "name": "jQuery",
