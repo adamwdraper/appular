@@ -3,13 +3,12 @@
  */
 var allTestFiles = [],
     TESTS_REGEXP = /tests\.js$/,
-    LIB_REGEXP = /libraries/,
     pathToModule = function(path) {
         return path.replace(/^\/base\//, '').replace(/\.js$/, '');
     };
 
 Object.keys(window.__karma__.files).forEach(function(file) {
-    if (TESTS_REGEXP.test(file) && !LIB_REGEXP.test(file)) {
+    if (TESTS_REGEXP.test(file)) {
         // Normalize paths to RequireJS module names.
         allTestFiles.push(pathToModule(file));
     }
