@@ -1,0 +1,46 @@
+{
+  "name": "project",
+  "version": "0.0.1",
+  "homepage": "http://project.com",
+  "description": "project",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adamwdraper/appular.git"
+  },
+  "dependencies": {
+    "express": "~3.1.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-open": "~0.2.0",
+    "grunt-concurrent": "~0.3.0",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-requirejs": "~0.4.4",
+    "grunt-express-server": "~0.4.5",
+    "load-grunt-tasks": "~0.2.0",
+    "karma": "~0.12.16",
+    "grunt-karma": "~0.8.3",
+    "mocha": "~1.20.1",
+    "karma-mocha": "~0.1.3",
+    "requirejs": "~2.1.14",
+    "karma-requirejs": "~0.2.2",
+    "chai": "~1.9.1",
+    "karma-chai": "~0.1.0",
+    "sinon": "~1.10.2",
+    "karma-sinon": "~1.0.3",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-mocha-reporter": "~0.2.5"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": {
+    "name": "Adam Draper",
+    "email": "adamwdraper@gmail.com",
+    "url": "http://github.com/adamwdraper"
+  },
+  "license": "BSD"
+}
