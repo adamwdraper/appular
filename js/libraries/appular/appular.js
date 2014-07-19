@@ -19,6 +19,8 @@ define([
 ], function (module, $, _, Backbone, cookies) {
     var Appular = {},
         $body = $('body'),
+        $window = $('window'),
+        $document = $('document'),
         viewOptions = [
             'model',
             'collection',
@@ -100,10 +102,13 @@ define([
             config: Appular.config,
             listeners: {},
             constructor: function(options) {
-                var attributes;
-
                 this.plugins = {};
                 this.views = {};
+
+                // add common selectors
+                this.$window = $window;
+                this.$document = $document;
+                this.$body = $body;
 
                 options = options || {};
 
@@ -112,7 +117,7 @@ define([
                     this.app = options.app;
                 }
 
-                // construct this.model and add options to view's model as attributes
+                // construct this.model
                 if (options.model) {
                     this.model = options.model;
 
@@ -120,19 +125,17 @@ define([
                     delete options.model;
                 }
 
-                if (this.model) {
-                    // get attributes to set
-                    attributes = _.omit(options, viewOptions);
+                // instantiate model if it is uninstantiated
+                if (typeof this.model === 'function') {
+                    this.model = new this.model();
+                }
 
-                    // create new model passing in attributes
-                    if (typeof this.model === 'function') {
-                        this.model = new this.model(attributes);
-                    }
+                // construct this.collection
+                if (options.collection) {
+                    this.collection = options.collection;
 
-                    // propagate all model events to the view
-                    this.listenTo(this.model, 'all', function () {
-                        this.trigger.apply(this, arguments);
-                    });
+                    // make sure backbone doesn't override our collection
+                    delete options.collection;
                 }
 
                 // instantiate collection if it is uninstantiated
@@ -161,16 +164,7 @@ define([
                     }
                 }, this);
 
-                // add common selectors
-                this.$body = $body;
-
                 View.apply(this, arguments);
-            },
-            set: function () {
-                return this.model.set.apply(this.model, arguments);
-            },
-            get: function () {
-                return this.model.get.apply(this.model, arguments);
             }
         });
     })(Backbone.View);

@@ -46,10 +46,13 @@ define([
                 var view;
 
                 beforeEach(function (done) {
+                    var App = Backbone.App.extend();
+
                     view = new Backbone.View({
-                        app: 'app',
-                        test: 'test',
-                        model: Backbone.Model.extend()
+                        app: new App(),
+                        data: 'test',
+                        model: Backbone.Model.extend(),
+                        collection: Backbone.Collection.extend()
                     });
                     done();
                 });
@@ -60,46 +63,25 @@ define([
                     assert.property(view, 'views');
                 });
 
-                it ('sets model attributes when options are passed to it', function () {
-                    expect(view.model.get('test')).to.equal('test');
+                it ('has common jquery objects', function () {
+                    assert.property(view, '$window');
+                    assert.property(view, '$document');
+                    assert.property(view, '$body');
                 });
 
                 it ('creates an app property', function () {
-                    expect(view.app).to.equal('app');
+                    expect(view.app).to.be.an('object');
                 });
 
-                it ('has get and set model shortcuts', function () {
-                    view.set('test', 'testing');
-                    expect(view.get('test')).to.equal('testing');
+                it ('sets and instantiates model', function () {
+                    expect(view.model).to.be.an('object');
                 });
 
-                describe('model events bubbled', function () {
-
-                    it ('bubbles up model general change', function (done) {
-                        var setValue = 'testing';
-
-                        view.on('change', function (model, options) {
-                            assert.ok(model);
-                            assert.ok(options);
-                            done();
-                        });
-
-                        view.set('test', setValue);
-                    });
-                    
-                    it ('bubbles up model attribute change', function (done) {
-                        var setValue = 'testing';
-
-                        view.on('change:test', function (model, value, options) {
-                            assert.ok(model);
-                            expect(value).to.equal(setValue);
-                            assert.ok(options);
-                            done();
-                        });
-
-                        view.set('test', setValue);
-                    });
+                it ('sets and instantiates collection', function () {
+                    expect(view.collection).to.be.an('object');
                 });
+
+
             });
 
             describe('App', function () {
