@@ -3,22 +3,22 @@ var fs = require('fs');
 module.exports = function(grunt) {
     var appular = {
             paths: {
-                apps: './js/apps',
+                routers: './js/routers',
                 components: './js/components',
                 plugins: './js/plugins',
                 utilities: './js/utilities'
             },
-            apps: [],
+            routers: [],
             components: [],
             plugins: [],
             utilities: []
         };
 
-    // add appular app definition for build
-    fs.readdirSync(appular.paths.apps).forEach(function (name) {
+    // add appular router definition for build
+    fs.readdirSync(appular.paths.routers).forEach(function (name) {
         if (name[0] !== '.' && name[0] !== '_') {
-            appular.apps.push({
-                name: 'apps/' + name + '/app',
+            appular.routers.push({
+                name: 'routers/' + name + '/router',
                 exclude: [
                     'initialize'
                 ]
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
-                '/js/apps/**/*.js',
+                '/js/routers/**/*.js',
                 '/js/components/**/*.js',
                 '/js/plugins/**/*.js',
                 '/js/utilities/**/*.js'
@@ -168,7 +168,7 @@ module.exports = function(grunt) {
                                 'initialize'
                             ].concat(appular.plugins, appular.utilities)
                         }
-                    ].concat(appular.apps, appular.components),
+                    ].concat(appular.routers, appular.components),
                     removeCombined: true
                 }
             }

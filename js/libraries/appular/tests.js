@@ -30,14 +30,14 @@ define([
             Appular.require.component('_boilerplate', { foo: 'bar' });
         });
 
-        it ('Can load an appular app', function (done) {
-            Backbone.once('appular:app:required', function (app) {
-                assert.ok(app);
-                expect(app).to.be.an.instanceOf(Backbone.App);
+        it ('Can load an appular router', function (done) {
+            Backbone.once('appular:router:required', function (router) {
+                assert.ok(router);
+                expect(router).to.be.an.instanceOf(Backbone.Router);
                 done();
             });
 
-            Appular.require.app('_boilerplate');
+            Appular.require.router('_boilerplate');
         });
 
         describe('Appular Backbone Object Extenstions', function () {
@@ -46,13 +46,13 @@ define([
                 var view;
 
                 beforeEach(function () {
-                    var app = new Backbone.App(),
+                    var router = new Backbone.Router(),
                         View = Backbone.View.extend({
-                            app: app,
+                            router: router,
                             listeners: {
                                 'change:test model': 'test',
                                 'add collection': 'test',
-                                'testing app': 'test',
+                                'testing router': 'test',
                                 'testing': 'test'
                             },
                             model: new Backbone.Model({
@@ -83,8 +83,8 @@ define([
                     assert.property(view, '$body');
                 });
 
-                it ('creates an app property', function () {
-                    expect(view.app).to.be.an('object');
+                it ('creates an router property', function () {
+                    expect(view.router).to.be.an('object');
                 });
                 
                 describe('Listeners porperty', function () {
@@ -102,8 +102,8 @@ define([
                         assert(view.test.calledOnce);
                     });
 
-                    it ('hears app events', function () {
-                        view.app.trigger('testing');
+                    it ('hears router events', function () {
+                        view.router.trigger('testing');
                         
                         assert(view.test.calledOnce);
                     });
@@ -116,17 +116,16 @@ define([
                 });
             });
 
-            describe('App', function () {
-                var app;
+            describe('Router', function () {
+                var router;
 
                 beforeEach(function () {
-                    app = new Backbone.App();
+                    router = new Backbone.Router();
                 });
 
                 it ('Should have certain properties', function () {
-                    assert.property(app, 'config');
-                    assert.property(app, 'params');
-                    assert.property(app, 'router');
+                    assert.property(router, 'config');
+                    assert.property(router, 'data');
                 });
             });
 

@@ -5,30 +5,29 @@ define([
     'backbone',
     'appular'
 ], function (doc, $, _, Backbone, Appular) {
-    var app = $('body').data('appularApp'),
-        options = {},
+    var router = $('body').data('appularRouter'),
         $components = $('[data-appular-component]');
 
-    // Render all components when app is ready
-    Backbone.on('appular:app:required', function () {
+    // Render all components when router is ready
+    Backbone.on('appular:router:required', function () {
         Backbone.history.start({
             root: window.location.pathname,
             pushState: true
         });
     });
 
-    // render app when all params are loaded
+    // render router when all params are loaded
     Backbone.on('appular:params:initialized', function () {
-        Appular.app.render();
+        Appular.router.render();
     });
 
-    // Render all components when app is ready
+    // Render all components when router is ready
     Backbone.on('appular:component:required', function (component) {
         component.render();
     });
 
-    // Render all components when app is ready
-    Backbone.on('appular:app:rendered', function () {
+    // Render all components when router is ready
+    Backbone.on('appular:router:rendered', function () {
         _.each($components, function (element) {
             var $element = $(element),
                 name = $element.data('appularComponent'),
@@ -53,10 +52,10 @@ define([
     Appular.log('Library', 'Backbone', 'v' + Backbone.VERSION);
     Appular.log('Library', 'Underscore', 'v' + _.VERSION);
     
-    // require app
-    if (app) {
-        Appular.require.app(app, options);
+    // require router
+    if (router) {
+        Appular.require.router(router);
     } else {
-        throw new Error('Appular : No app found');
+        throw new Error('Appular : No router found');
     }
 });

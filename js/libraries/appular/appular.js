@@ -30,12 +30,12 @@ define([
             'className',
             'tagName',
             'events',
-            'app'
+            'router'
         ];
 
     Appular.version = '0.9.0';
 
-    Appular.app = '';
+    Appular.router = '';
 
     Appular.components = {};
 
@@ -44,7 +44,7 @@ define([
     Appular.log = function () {
         var colors = {
                 Library: 'FC913A',
-                App: '00A8C6',
+                Router: '00A8C6',
                 Component: '40C0CB',
                 Event: '8FBE00'
             },
@@ -57,24 +57,20 @@ define([
 
     Appular.require = {};
 
-    Appular.require.app = function (name, options) {
-        var path = 'apps/' + name + '/app';
+    Appular.require.router = function (name, options) {
+        var path = 'routers/' + name + '/router';
 
         options = options || {};
 
-        _.extend(options, {
-            el: $('body')
-        });
-
         require([
             path
-        ], function (App) {
+        ], function (Router) {
             // log load in dev
-            Appular.log('App', name, path);
+            Appular.log('Router', name, path);
 
-            Appular.app = new App(options);
+            Appular.router = new Router(options);
 
-            Backbone.trigger('appular:app:required', Appular.app);
+            Backbone.trigger('appular:router:required', Appular.router);
         });
     };
     
@@ -83,7 +79,7 @@ define([
 
         options = options || {};
 
-        options.app = Appular.app;
+        options.router = Appular.router;
 
         require([
             path
@@ -112,9 +108,9 @@ define([
 
                 options = options || {};
 
-                // add app when sent in
-                if (options.app) {
-                    this.app = options.app;
+                // add router when sent in
+                if (options.router) {
+                    this.router = options.router;
                 }
 
                 // set up on's or listenTo's from the listeners object
@@ -123,14 +119,14 @@ define([
                         property = _.last(events),
                         callback = _.isFunction(value) ? value : this[value];
 
-                    // find out if we are listening to app, model, or collection so that we can use listenTo
-                    if (property === 'app' || property === 'model' || property === 'collection') {
+                    // find out if we are listening to router, model, or collection so that we can use listenTo
+                    if (property === 'router' || property === 'model' || property === 'collection') {
                         events.pop();
                     } else {
                         property = null;
                     }
 
-                    // add appropriate listening action
+                    // add routerropriate listening action
                     if (property) {
                         if (this[property]) {
                             this.listenTo(this[property], events.join(' '), callback);
@@ -173,8 +169,7 @@ define([
         });
     })(Backbone.Model);
 
-    // Create backbone app
-    var Param = Backbone.Model.extend({
+    var DataModel = Backbone.Model.extend({
             defaults: {
                 id: '',
                 value: '',
@@ -196,8 +191,8 @@ define([
                 return value;
             }
         }),
-        Params = Backbone.Collection.extend({
-            model: Param,
+        DataCollection = Backbone.Collection.extend({
+            model: DataModel,
             initialize: function () {
                 _.bindAll(this, 'load');
 
@@ -207,12 +202,12 @@ define([
                     }, this);
                 }, this);
             },
-            // Sets params based on url data on initial load (ignores any parameters that are not defined in app)
-            load: function (params) {
-                // params sent from router
-                _.each(params, function (param) {
-                    var id = param.id,
-                        value = param.value,
+            // Sets datas based on url data on initial load (ignores any data that are not defined in router)
+            load: function (datas) {
+                // datas sent from router
+                _.each(datas, function (data) {
+                    var id = data.id,
+                        value = data.value,
                         model = this.get(id);
 
                     // check for alias match
@@ -231,7 +226,7 @@ define([
                     }
                 }, this);
 
-                // params from cookies
+                // datas from cookies
                 _.each(this.models, function (model) {
                     if (model.get('loadFromCookie')) {
                         model.set({
@@ -242,8 +237,8 @@ define([
                     }
                 }, this);
 
-                // all params should be loaded
-                Backbone.trigger('appular:params:initialized');
+                // all datas should be loaded
+                Backbone.trigger('appular:data:initialized');
             },
             /**
             @function getValue - shortcut to get model's value
@@ -275,56 +270,91 @@ define([
                     value: value
                 }, options);
             }
-        }),
-        ParamsRouter = Backbone.Router.extend({
+        });
+
+    // Create backbone router
+    Backbone.Router = (function(Router) {
+        return Router.extend({
+            config: Appular.config,
+            data: {},
             settings: {
                 hash: {
-                    useBang: false,
-                    paramSeparator: '&',
+                    dataSeparator: '&',
                     keyValSeparator: '=',
                     arraySeparator: '|'
                 },
                 // where the router will read the initial data from.  options: hash or query
                 loadFrom: 'hash'
             },
-            initialize: function (options) {
-                // Update the url hash whenever a param changes
-                this.collection = options.collection;
-                this.collection.on('change', function (param) {
-                    this.navigateHash(!param.get('addToHistory'));
+            collection: new DataCollection(),
+            constructor: function(options) {
+                var models = [],
+                    dataValues = _.omit(options, viewOptions);
+                
+                // add any data to collection
+                _.each(this.data, function (value, key) {
+                    var model = {
+                            id: key
+                        };
+
+                    if (_.isString(value)) {
+                        model.value = value;
+                    }
+
+                    if (_.isObject(value)) {
+                        model = _.extend(model, value);
+                    }
+
+                    // set the value of any options
+                    if (dataValues[key]) {
+                        model.value = dataValues[key];
+                    }
+
+                    models.push(model);
                 }, this);
+
+                this.collection.add(models);
+
+                // trigger collection events on the router
+                this.collection.on('all', function () {
+                    var args = Array.prototype.slice.call(arguments),
+                        event = args.shift();
+
+                    if (event !== 'change:value') {
+                        this.trigger(event, args);
+                    }
+                }, this);
+
+                // call original constructor
+                Router.apply(this, arguments);
             },
             routes: {
                 '*data': 'action'
             },
             action: function (data) {
-                var params = [];
+                var datas = [];
 
                 if (data) {
-                    if (this.settings.hash.useBang && data.charAt(0) === '!') {
-                        data = data.substr(1);
-                    }
-
-                    _.each(data.split(this.settings.hash.paramSeparator), function (param) {
-                        var id = param.split(this.settings.hash.keyValSeparator)[0],
-                            value = param.split(this.settings.hash.keyValSeparator)[1];
+                    _.each(data.split(this.settings.hash.dataSeparator), function (data) {
+                        var id = data.split(this.settings.hash.keyValSeparator)[0],
+                            value = data.split(this.settings.hash.keyValSeparator)[1];
 
                         if (value.indexOf(this.settings.hash.arraySeparator) !== -1) {
                             value = value.split(this.settings.hash.arraySeparator);
                         }
 
-                        params.push({
+                        datas.push({
                             id: id,
                             value: value
                         });
                     }, this);
                 }
                 
-                this.collection.load(params);
+                this.collection.load(datas);
             },
             navigateHash: function (replace) {
                 // Generate and navigate to new hash
-                var params = [],
+                var datas = [],
                     hash = '',
                     value;
 
@@ -340,98 +370,41 @@ define([
 
                         if (value) {
                             // use alias if it is defined
-                            params.push((model.get('alias') ? model.get('alias') : model.get('id')) + this.settings.hash.keyValSeparator + value);
+                            datas.push((model.get('alias') ? model.get('alias') : model.get('id')) + this.settings.hash.keyValSeparator + value);
                         }
                     }
                 }, this);
 
                 // Add bang to hash if enabled
-                if (this.settings.hash.useBang) {
-                    hash += '!';
-                }
-                if (!_.isEmpty(params)){
-                    hash += params.join(this.settings.hash.paramSeparator);
+                if (!_.isEmpty(datas)){
+                    hash += datas.join(this.settings.hash.dataSeparator);
                 }
 
                 this.navigate(hash, {
                     trigger: false,
                     replace: replace
                 });
-            }
-        });
-
-    Backbone.App = (function(View) {
-        return View.extend({
-            config: Appular.config,
-            params: {},
-            collection: new Params(),
-            router: {},
-            constructor: function(options) {
-                var models = [],
-                    paramValues = _.omit(options, viewOptions);
-                
-                // add any params to collection
-                _.each(this.params, function (value, key) {
-                    var model = {
-                            id: key
-                        };
-
-                    if (_.isString(value)) {
-                        model.value = value;
-                    }
-
-                    if (_.isObject(value)) {
-                        model = _.extend(model, value);
-                    }
-
-                    // set the value of any options
-                    if (paramValues[key]) {
-                        model.value = paramValues[key];
-                    }
-
-                    models.push(model);
-                }, this);
-
-                this.collection.add(models);
-
-                // trigger collection events on the app
-                this.collection.on('all', function () {
-                    var args = Array.prototype.slice.call(arguments),
-                        event = args.shift();
-
-                    if (event !== 'change:value') {
-                        this.trigger(event, args);
-                    }
-                }, this);
-
-                // create router and add collection
-                this.router = new ParamsRouter({
-                    collection: this.collection
-                });
-
-                // call original constructor
-                View.apply(this, arguments);
             },
             /**
-            @function get - shortcut to get params's value
+            @function get - shortcut to get datas's value
             */
             get: function(name) {
                 return this.collection.getValue(name);
             },
             /**
-            @function set - shortcut to set param's value
+            @function set - shortcut to set data's value
             */
             set: function(id, value, options) {
                 return this.collection.setValue(id, value, options);
             },
             /**
-            @function set - shortcut to set param's value
+            @function set - shortcut to set data's value
             */
             toggle: function (name) {
                 this.collection.setValue(name, !this.collection.get('value'));
             }
         });
-    })(Backbone.View);
+    })(Backbone.Router);
 
     // add config for template variable syntax
     _.templateSettings = {
