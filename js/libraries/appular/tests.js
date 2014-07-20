@@ -45,19 +45,33 @@ define([
             describe('View', function () {
                 var view;
 
-                beforeEach(function (done) {
-                    var App = Backbone.App.extend();
+                beforeEach(function () {
+                    var app = new Backbone.App(),
+                        View = Backbone.View.extend({
+                            app: app,
+                            listeners: {
+                                'change:test model': 'test',
+                                'add collection': 'test',
+                                'testing app': 'test',
+                                'testing': 'test'
+                            },
+                            model: new Backbone.Model({
+                                test: 'test'
+                            }),
+                            collection: new Backbone.Collection({
+                                test: 'test'
+                            }),
+                            test: sinon.spy()
+                        });
 
-                    view = new Backbone.View({
-                        app: new App(),
-                        data: 'test',
-                        model: Backbone.Model.extend(),
-                        collection: Backbone.Collection.extend()
-                    });
-                    done();
+                    view = new View();
                 });
 
-                it ('Should have certain properties', function () {
+                it ('should be an object', function () {
+                    expect(view).to.be.an('object');
+                });
+
+                it ('should have certain properties', function () {
                     assert.property(view, 'config');
                     assert.property(view, 'plugins');
                     assert.property(view, 'views');
@@ -72,24 +86,41 @@ define([
                 it ('creates an app property', function () {
                     expect(view.app).to.be.an('object');
                 });
+                
+                describe('Listeners porperty', function () {
+                    it ('hears model events', function () {
+                        view.model.set('test', 'testing');
+                        
+                        assert(view.test.calledOnce);
+                    });
 
-                it ('sets and instantiates model', function () {
-                    expect(view.model).to.be.an('object');
+                    it ('hears collection events', function () {
+                        view.collection.add({
+                            'test': 'testing'
+                        });
+                        
+                        assert(view.test.calledOnce);
+                    });
+
+                    it ('hears app events', function () {
+                        view.app.trigger('testing');
+                        
+                        assert(view.test.calledOnce);
+                    });
+
+                    it ('hears custom events', function () {
+                        view.trigger('testing');
+                        
+                        assert(view.test.calledOnce);
+                    });
                 });
-
-                it ('sets and instantiates collection', function () {
-                    expect(view.collection).to.be.an('object');
-                });
-
-
             });
 
             describe('App', function () {
                 var app;
 
-                beforeEach(function (done) {
+                beforeEach(function () {
                     app = new Backbone.App();
-                    done();
                 });
 
                 it ('Should have certain properties', function () {
@@ -102,9 +133,8 @@ define([
             describe('Collection', function () {
                 var collection;
 
-                beforeEach(function (done) {
+                beforeEach(function () {
                     collection = new Backbone.Collection();
-                    done();
                 });
 
                 it ('Should have certain properties', function () {
@@ -115,9 +145,8 @@ define([
             describe('Model', function () {
                 var model;
 
-                beforeEach(function (done) {
+                beforeEach(function () {
                     model = new Backbone.Model();
-                    done();
                 });
 
                 it ('Should have certain properties', function () {

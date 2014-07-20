@@ -117,40 +117,18 @@ define([
                     this.app = options.app;
                 }
 
-                // construct this.model
-                if (options.model) {
-                    this.model = options.model;
-
-                    // make sure backbone doesn't override our model
-                    delete options.model;
-                }
-
-                // instantiate model if it is uninstantiated
-                if (typeof this.model === 'function') {
-                    this.model = new this.model();
-                }
-
-                // construct this.collection
-                if (options.collection) {
-                    this.collection = options.collection;
-
-                    // make sure backbone doesn't override our collection
-                    delete options.collection;
-                }
-
-                // instantiate collection if it is uninstantiated
-                if (typeof this.collection === 'function') {
-                    this.collection = new this.collection();
-                }
-
                 // set up on's or listenTo's from the listeners object
                 _.each(this.listeners, function (value, key) {
                     var events = key.split(' '),
-                        property,
+                        property = _.last(events),
                         callback = _.isFunction(value) ? value : this[value];
 
                     // find out if we are listening to app, model, or collection so that we can use listenTo
-                    property = events[0] === 'app' || events[0] === 'model' || events[0] === 'collection' ? events.shift() : null;
+                    if (property === 'app' || property === 'model' || property === 'collection') {
+                        events.pop();
+                    } else {
+                        property = null;
+                    }
 
                     // add appropriate listening action
                     if (property) {
