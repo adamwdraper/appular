@@ -16,18 +16,13 @@ define([
         });
     });
 
-    // render router when all params are loaded
-    Backbone.on('appular:params:initialized', function () {
-        Appular.router.render();
-    });
-
     // Render all components when router is ready
     Backbone.on('appular:component:required', function (component) {
         component.render();
     });
 
     // Render all components when router is ready
-    Backbone.on('appular:router:rendered', function () {
+    Backbone.on('appular:data:initialized', function () {
         _.each($components, function (element) {
             var $element = $(element),
                 name = $element.data('appularComponent'),

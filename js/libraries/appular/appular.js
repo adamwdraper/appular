@@ -57,10 +57,8 @@ define([
 
     Appular.require = {};
 
-    Appular.require.router = function (name, options) {
+    Appular.require.router = function (name) {
         var path = 'routers/' + name + '/router';
-
-        options = options || {};
 
         require([
             path
@@ -68,7 +66,7 @@ define([
             // log load in dev
             Appular.log('Router', name, path);
 
-            Appular.router = new Router(options);
+            Appular.router = new Router();
 
             Backbone.trigger('appular:router:required', Appular.router);
         });
