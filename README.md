@@ -1,63 +1,65 @@
 # Appular
 
-A modular Javascript organizational scheme composed of AMD compatible modules based on Backbone and RequireJs.
+A modular Javascript organizational scheme based on Backbone, RequireJs and Mocha for testing.
 
 Appular isn't really a framework.  It does a couple of nice things, like loading modules based on data attributes, but mostly it aims to help you:
 - Organize JS into reusable modules
 - Keep your JS DRY
-- Create an event driven structure
 - Break down your apps into smaller pieces to make it more maintainable and testable
 - Eliminate spagetti code that can occur even when a JS framework is being used
 - Create documentation for your modules from inline comments
 
-## Concepts
-In Appular there are 3 different types of modules.
+## Slideshow
+[http://slid.es/adamwdraper/appular](http://slid.es/adamwdraper/appular)
 
-### Modules
-Modules are Backbone Views that represet an element on the page.  They are meant to be reusable, and to function independent of any other modules on the page.
+## Concepts
+In Appular there are 4 different types of modules.
+
+### Routers
+This is where you do any prep work like authentication checks before any of your components load.  A router is added to a page by adding `data-appular-router="router-name"` to the body tag.
+
+Routers also have a special collection that components use to share data.  Any changes to this collection are automatically populated to the hash.  
+
+### Components
+Components are bound to dom elements by adding a `data-appular-component="component-name"` attribute to the element.
 
 ### Plugins
-Plugins are used by modules and are meant for very specific functionality that you are using in several modules.  Use them for tasks like long-polling or watching for infinite scrolling.  Ideally these are kept small and dumb. (i.e. they do their work, trigger events when necessary, and modules react to those events)
+Plugins are used by components and are meant for very specific functionality that you are using in several components.  Use them for tasks like long-polling or watching for infinite scrolling.  Ideally these are kept small and dumb. (i.e. they do their work, trigger events when necessary, and components react to those events)
 
 ### Utilities
-These are top level "helpers" that can act as mini libraries.
+These "helpers" that can act as mini libraries.
 
 ## Use
 Included these scripts based on environment.  This way debuging is easy since nothing is uglified.
 
 ```
 // Development Environment
-<script src="/js/dev/libraries/require/require-2.1.9.js"></script>
-<script src="/js/dev/libraries/require/config.js"></script>
-<script src="/js/dev/libraries/appular/appular.js"></script>
+<script src="/js/dev/libraries/require/require.js" data-main="/js/dev/libraries/require/configs/dev"></script>
 ```
 
 ```
 // Production Environment
-<script src="/js/build/appular.js"></script>
+<script src="/js/build/initialize.js"></script>
 ```
 
-Then add data attributes to elements that you want to attach modules too, and Appular will load them for you.
+Then add data attributes to elements that you want to attach components too, and Appular will load them for you.
 ```
-<div data-appular-module="feed"></div>
-```
-
-Use additional data attributes to pass options to modules.
-```
-<div data-appular-module="feed" data-count="10"></div>
+<div data-appular-component="user-bar"></div>
 ```
 
-Count would then be available in the module as `this.options.count`
+## Documentation
 
-## Project Documentation
-
-Appular can generate documentation code for your project with its [grunt plugin](https://github.com/adamwdraper/grunt-appular-docs).
+Appular can generate documentation code for your project with its [documentation grunt plugin](https://github.com/adamwdraper/grunt-appular-docs).
 
 ## Grunt Commands
-`grunt`:
-- jshints all javascript
-- creates documentation json with grunt-appular-docs plugin
-- uses r.js to create production build of javascript
+`grunt` or `grunt develop` : Starts server in development environment, and watches NODE.js and SASS files for changes.
+
+`grunt test` : Runs tests.
+
+`grunt production` : Starts server in production environment.
+
+`grunt build` : Hints and builds production JS, runs tests, builds JS documentation, builds production CSS.
+
 
 ## Example Project
 Here is an [example project using Node and Express.js](https://github.com/adamwdraper/appular-express-app)
