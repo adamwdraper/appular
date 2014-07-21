@@ -1,115 +1,197 @@
+var fs = require('fs');
+
 module.exports = function(grunt) {
+    var appular = {
+            paths: {
+                routers: './js/routers',
+                components: './js/components',
+                plugins: './js/plugins',
+                utilities: './js/utilities'
+            },
+            routers: [],
+            components: [],
+            plugins: [],
+            utilities: []
+        };
+
+    // add appular router definition for build
+    fs.readdirSync(appular.paths.routers).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
+            appular.routers.push({
+                name: 'routers/' + name + '/router',
+                exclude: [
+                    'initialize'
+                ]
+            });
+        }
+    });
+
+    // add appular component definition for build and test files
+    fs.readdirSync(appular.paths.components).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
+            appular.components.push({
+                name: 'components/' + name + '/component',
+                exclude: [
+                    'initialize'
+                ]
+            });
+        }
+    });
+
+    // add appular plugins definition for build files
+    fs.readdirSync(appular.paths.plugins).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
+            appular.plugins.push('plugins/' + name + '/plugin');
+        }
+    });
+
+    // add appular utilities definition for build files
+    fs.readdirSync(appular.paths.utilities).forEach(function (name) {
+        if (name[0] !== '.' && name[0] !== '_') {
+            appular.plugins.push('utilities/' + name + '/utility');
+        }
+    });
+
+    require('load-grunt-tasks')(grunt);
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        docs: {
-            build: {
+        open : {
+            server : {
+                path: 'http://localhost:5000'
+            }
+        },
+        watch: {
+            express: {
+                files:  [
+                    'server.js'
+                ],
+                tasks:  [
+                    'express:server'
+                ],
                 options: {
-                    pretty: true
-                },
-                files: {
-                    'js/dev/modules/docs/json/docs.json': [
-                        'js/dev/**/*.js'
-                    ]
+                    nospawn: true //Without this option specified express won't be reloaded
+                }
+            },
+            testFiles: {
+                files: ['**/tests.js'],
+                tasks: ['test']
+            }
+        },
+        express: {
+            options: {
+                port: 5000
+            },
+            server: {
+                options: {
+                    script: 'server.js'
                 }
             }
         },
         jshint: {
             all: [
-                'js/dev/modules/**/*.js',
-                'js/dev/plugins/**/*.js',
-                'js/dev/utilities/**/*.js'
+                'js/routers/**/*.js',
+                'js/components/**/*.js',
+                'js/plugins/**/*.js',
+                'js/utilities/**/*.js'
             ],
             options: {
                 node: true,
                 browser: true,
                 curly: true,
-                devel: false,
+                devel: true,
                 eqeqeq: true,
-                eqnull: true,
                 noarg: true,
                 sub: true,
-                undef: true,
+                expr: true,
+                es5: true,
                 globals: {
                     define: false,
+                    describe: false,
+                    it: false,
+                    assert: false,
+                    expect: false,
+                    require: false,
                     requirejs: false
                 },
                 strict: false
             }
         },
+        karma: {
+            unit: {
+                configFile: 'js/karma.conf.js'
+            },
+            ci: {
+                configFile: 'js/karma.conf.js',
+                singleRun: true,
+                autoWatch: false
+            }
+        },
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: 'js/dev',
-                    dir: 'js/build',
+                    baseUrl: '/js',
+                    dir: '/js/build',
                     paths: {
-                        'modernizr': 'libraries/modernizr/modernizr-2.6.3',
+                        'appular': 'libraries/appular/appular',
+                        'modernizr': 'libraries/modernizr/modernizr',
                         'jquery': 'empty:',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
-                        'underscore': 'libraries/underscore/underscore-1.5.0',
-                        'backbone': 'libraries/backbone/backbone-1.0.0',
+                        'underscore': 'libraries/underscore/underscore',
+                        'backbone': 'libraries/backbone/backbone',
                         'backboneStickit': 'libraries/backbone/extensions/stickit',
-                        'moment': 'empty:',
-                        'numeral': 'empty:',
                         'domReady': 'libraries/require/plugins/domReady',
                         'async': 'libraries/require/plugins/async',
                         'json': 'libraries/require/plugins/json',
+                        'template': 'libraries/require/plugins/template',
                         'text': 'libraries/require/plugins/text'
+                    },
+                    shim: {
+                        'modernizr': {
+                            exports: 'Modernizr'
+                        }
                     },
                     modules: [
                         {
-                            name: 'appular',
+                            name: 'initialize',
                             include: [
                                 'modernizr',
-                                'libraries/require/require-2.1.9',
-                                'libraries/require/config-build',
-                                'libraries/appular/appular',
-                                'jquery',
-                                'jqueryFunctions',
+                                'libraries/require/require',
+                                'libraries/require/configs/build',
                                 'underscore',
                                 'backbone',
+                                'appular',
+                                'jqueryFunctions',
                                 'backboneStickit',
                                 'domReady',
-                                'text'
-                            ]
-                        },
-                        {
-                            name: 'modules/demo/module',
-                            exclude: [
-                                'appular'
-                            ]
-                        },
-                        {
-                            name: 'modules/user-bar/module',
-                            exclude: [
-                                'appular'
-                            ]
-                        },
-                        {
-                            name: 'modules/docs/module',
-                            exclude: [
-                                'appular'
-                            ]
+                                'text',
+                                'initialize'
+                            ].concat(appular.plugins, appular.utilities)
                         }
-                    ],
+                    ].concat(appular.routers, appular.components),
                     removeCombined: true
                 }
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-appular-docs');
-
     grunt.registerTask('default', [
-        'build'
+        'server'
     ]);
 
-    grunt.registerTask('build', 'Builds hints and builds production JS, and builds js documentation json', [
+    grunt.registerTask('server', 'Starts server.', [
+        'express:server',
+        'watch'
+    ]);
+
+    grunt.registerTask('test', 'Runs tests', [
         'jshint',
-        'docs:build',
+        'karma:ci'
+    ]);
+
+    grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation', [
+        'test',
         'requirejs'
     ]);
 };
