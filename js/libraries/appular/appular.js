@@ -285,9 +285,8 @@ define([
                 loadFrom: 'hash'
             },
             collection: new DataCollection(),
-            constructor: function(options) {
-                var models = [],
-                    dataValues = _.omit(options, viewOptions);
+            constructor: function() {
+                var models = [];
                 
                 // add any data to collection
                 _.each(this.data, function (value, key) {
@@ -301,11 +300,6 @@ define([
 
                     if (_.isObject(value)) {
                         model = _.extend(model, value);
-                    }
-
-                    // set the value of any options
-                    if (dataValues[key]) {
-                        model.value = dataValues[key];
                     }
 
                     models.push(model);
@@ -330,9 +324,20 @@ define([
                 '*data': 'action'
             },
             action: function (data) {
+                console.log(data);
+                this.loadData(data);
+            },
+            loadData: function (data) {
                 var datas = [];
-
-                if (data) {
+                
+                if (_.isObject(data)) {
+                    _.each(data, function (value, key) {
+                        datas.push({
+                            id: key,
+                            value: value
+                        });
+                    });
+                } else if (_.isString(data)) {
                     _.each(data.split(this.settings.hash.dataSeparator), function (data) {
                         var id = data.split(this.settings.hash.keyValSeparator)[0],
                             value = data.split(this.settings.hash.keyValSeparator)[1];
@@ -347,6 +352,8 @@ define([
                         });
                     }, this);
                 }
+
+                console.log(datas);
                 
                 this.collection.load(datas);
             },
