@@ -163,6 +163,12 @@ define([
                         expect(router.collection.get('k').get('value')).to.equal('testing');
                     });
                 });
+
+                describe('Navigate', function () {
+                    it('can generate a hash', function () {
+                        expect(router.getDataHash()).to.equal('k=testing&x=test');
+                    });
+                });
             });
 
             describe('Collection', function () {

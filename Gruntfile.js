@@ -105,6 +105,7 @@ module.exports = function(grunt) {
                 noarg: true,
                 sub: true,
                 expr: true,
+                es5: true,
                 globals: {
                     define: false,
                     describe: false,

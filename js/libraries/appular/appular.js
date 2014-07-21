@@ -354,7 +354,7 @@ define([
                 
                 this.collection.load(datas);
             },
-            navigateHash: function (replace) {
+            getDataHash: function () {
                 // Generate and navigate to new hash
                 var datas = [],
                     hash = '',
@@ -377,10 +377,14 @@ define([
                     }
                 }, this);
 
-                // Add bang to hash if enabled
                 if (!_.isEmpty(datas)){
                     hash += datas.join(this.settings.hash.dataSeparator);
                 }
+
+                return hash;
+            },
+            navigateHash: function (replace) {
+                var hash = this.getDataHash();
 
                 this.navigate(hash, {
                     trigger: false,
