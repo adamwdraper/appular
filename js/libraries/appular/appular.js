@@ -15,8 +15,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'utilities/cookies/utility'
-], function (module, $, _, Backbone, cookies) {
+    'utilities/cookies/utility',
+    'utilities/storage/utility'
+], function (module, $, _, Backbone, cookies, storage) {
     var Appular = {},
         $body = $('body'),
         $window = $('window'),
@@ -174,8 +175,11 @@ define([
                 alias: '',
                 addToHistory: true,
                 addToUrl: true,
-                loadFromCookie: false,
+                loadFrom: false,
                 type: ''
+            },
+            getId: function () {
+                return this.get('alias') ? this.get('alias') : this.get('id');
             },
             getValue: function () {
                 var type = this.get('type'),
@@ -224,11 +228,19 @@ define([
                     }
                 }, this);
 
-                // datas from cookies
+                // datas from cookies or storage
                 _.each(this.models, function (model) {
-                    if (model.get('loadFromCookie')) {
+                    var value;
+
+                    if (model.get('loadFrom') === 'cookie') {
+                        value = cookies.get(model.getId());
+                    } else if (model.get('loadFrom') === 'storage') {
+                        value = storage.get(model.getId());
+                    }
+
+                    if (value) {
                         model.set({
-                            value: cookies.get((model.get('alias') ? model.get('alias') : model.get('id')))
+                            value: value
                         }, {
                             silent: true
                         });
@@ -261,7 +273,7 @@ define([
                 options = options || {};
 
                 if (model.get('loadFromCookie')) {
-                    cookies.set((model.get('alias') ? model.get('alias') : id), value);
+                    cookies.set(model.getId(), value);
                 }
 
                 return this.get(id).set({
