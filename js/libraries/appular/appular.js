@@ -145,6 +145,12 @@ define([
     Backbone.Collection = (function(Collection) {
         return Collection.extend({
             config: Appular.config,
+            constructor: function() {
+                // add router
+                this.router = Appular.router;
+                
+                Collection.apply(this, arguments);
+            },
             fetch: function (options) {
                 if (this.fixture && this.config.useFixtures) {
                     options.url = this.fixture;
@@ -158,6 +164,12 @@ define([
     Backbone.Model = (function(Model) {
         return Model.extend({
             config: Appular.config,
+            constructor: function() {
+                // add router
+                this.router = Appular.router;
+                
+                Model.apply(this, arguments);
+            },
             fetch: function (options) {
                 if (this.fixture && this.config.useFixtures) {
                     options.url = this.fixture;
@@ -327,6 +339,10 @@ define([
                     if (event !== 'change:value') {
                         this.trigger(event, args);
                     }
+                }, this);
+
+                this.collection.on('change', function (param) {
+                    this.navigateHash(!param.get('addToHistory'));
                 }, this);
 
                 // call original constructor
