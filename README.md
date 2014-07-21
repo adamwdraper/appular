@@ -1,8 +1,8 @@
 # Appular
 
-A modular Javascript organizational scheme based on Backbone, RequireJs and Mocha for testing.
+A modular Javascript organizational scheme based on Backbone and RequireJs for coding, Karma and Mocha for testing, and Grunt for building.
 
-Appular isn't really a framework.  It does a couple of nice things, like loading modules based on data attributes, but mostly it aims to help you:
+Appular isn't a framework.  It does a couple of nice things, like loading modules based on data attributes, but mostly it aims to help you:
 - Organize JS into reusable modules
 - Keep your JS DRY
 - Break down your apps into smaller pieces to make it more maintainable and testable
@@ -34,7 +34,7 @@ Included these scripts based on environment.  This way debuging is easy since no
 
 ```
 // Development Environment
-<script src="/js/dev/libraries/require/require.js" data-main="/js/dev/libraries/require/configs/dev"></script>
+<script src="/js/libraries/require/require.js" data-main="/js/libraries/require/configs/dev"></script>
 ```
 
 ```
@@ -52,17 +52,20 @@ Then add data attributes to elements that you want to attach components too, and
 Appular can generate documentation code for your project with its [documentation grunt plugin](https://github.com/adamwdraper/grunt-appular-docs).
 
 ## Grunt Commands
-`grunt` or `grunt develop` : Starts server in development environment, and watches NODE.js and SASS files for changes.
+`grunt` or `grunt develop` : Starts server in development environment, and watches files for changes.
 
 `grunt test` : Runs tests.
 
-`grunt production` : Starts server in production environment.
-
-`grunt build` : Hints and builds production JS, runs tests, builds JS documentation, builds production CSS.
+`grunt build` : Hints and builds production code, and runs tests.
 
 
-## Example Project
-Here is an [example project using Node and Express.js](https://github.com/adamwdraper/appular-express-app)
+## Examples in Environments
+
+[Example project using Node.js and Express.js](https://github.com/adamwdraper/appular-express-app)
+
+## Demos
+
+Here is an [example photo search app](https://github.com/adamwdraper/flickr-search)
 
 ## Readiness
 
