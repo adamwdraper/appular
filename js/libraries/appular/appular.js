@@ -1,11 +1,11 @@
 /**
- * @appular appular v0.9.0
+ * @appular appular v0.9.5
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 0.9.0
+// version : 0.9.5
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -33,7 +33,7 @@ define([
             'router'
         ];
 
-    Appular.version = '0.9.0';
+    Appular.version = '0.9.5';
 
     Appular.router = '';
 
