@@ -91,10 +91,10 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: [
-                '/js/routers/**/*.js',
-                '/js/components/**/*.js',
-                '/js/plugins/**/*.js',
-                '/js/utilities/**/*.js'
+                'js/routers/**/*.js',
+                'js/components/**/*.js',
+                'js/plugins/**/*.js',
+                'js/utilities/**/*.js'
             ],
             options: {
                 node: true,

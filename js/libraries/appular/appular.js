@@ -324,7 +324,6 @@ define([
                 '*data': 'action'
             },
             action: function (data) {
-                console.log(data);
                 this.loadData(data);
             },
             loadData: function (data) {
@@ -352,8 +351,6 @@ define([
                         });
                     }, this);
                 }
-
-                console.log(datas);
                 
                 this.collection.load(datas);
             },
