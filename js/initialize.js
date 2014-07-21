@@ -16,12 +16,7 @@ define([
         });
     });
 
-    // Render all components when router is ready
-    Backbone.on('appular:component:required', function (component) {
-        component.render();
-    });
-
-    // Render all components when router is ready
+    // Require all components when router is ready
     Backbone.on('appular:data:initialized', function () {
         _.each($components, function (element) {
             var $element = $(element),
@@ -39,6 +34,11 @@ define([
 
             Appular.require.component(name, options);
         });
+    });
+
+    // Render component after it is required 
+    Backbone.on('appular:component:required', function (component) {
+        component.render();
     });
 
     // log major libraries being used
