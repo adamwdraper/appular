@@ -126,7 +126,7 @@ define([
                     storage.set('storage', 'testing');
 
                     var Router = Backbone.Router.extend({
-                        data: {
+                        params: {
                             k: {
                                 value: 'testing'
                             },
@@ -149,15 +149,15 @@ define([
 
                 it('Should have certain properties', function () {
                     assert.property(router, 'config');
-                    assert.property(router, 'data');
+                    assert.property(router, 'params');
                 });
 
-                describe('Data Collection', function () {
-                    it('should have a collection for data', function () {
+                describe('Params Collection', function () {
+                    it('should have a collection for params', function () {
                         assert.property(router, 'collection');
                     });
 
-                    it('should load data on construction', function () {
+                    it('should load params on construction', function () {
                         expect(router.get('k')).to.equal('testing');
                         expect(router.get('x')).to.equal('test');
                     });
@@ -173,15 +173,15 @@ define([
                     });
                 });
 
-                describe('Initialize data', function () {
+                describe('Initialize params', function () {
                     it('can load a string', function () {
-                        router.loadData('k=testing');
+                        router.loadParams('k:testing');
 
                         expect(router.get('k')).to.equal('testing');
                     });
                     
                     it('can load an object', function () {
-                        router.loadData({
+                        router.loadParams({
                             k: 'testing'
                         });
 
@@ -191,7 +191,7 @@ define([
 
                 describe('Navigate', function () {
                     it('can generate a hash', function () {
-                        expect(router.getDataHash()).to.equal('k=testing&x=test');
+                        expect(router.getParamsHash()).to.equal('k:testing/x:test');
                     });
                 });
             });
