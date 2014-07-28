@@ -159,7 +159,7 @@ define([
                         property = null;
                     }
 
-                    // add routerropriate listening action
+                    // add route appopriate listening action
                     if (property) {
                         if (this[property]) {
                             this.listenTo(this[property], events.join(' '), callback);

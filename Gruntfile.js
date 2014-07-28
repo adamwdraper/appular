@@ -20,7 +20,7 @@ module.exports = function(grunt) {
             appular.routers.push({
                 name: 'routers/' + name + '/router',
                 exclude: [
-                    'initialize'
+                    'libraries/require/require'
                 ]
             });
         }
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             appular.components.push({
                 name: 'components/' + name + '/component',
                 exclude: [
-                    'initialize'
+                    'libraries/require/require'
                 ]
             });
         }
@@ -131,8 +131,8 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: '/js',
-                    dir: '/js/build',
+                    baseUrl: 'js',
+                    dir: 'js/build',
                     paths: {
                         'appular': 'libraries/appular/appular',
                         'modernizr': 'libraries/modernizr/modernizr',
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
                     },
                     modules: [
                         {
-                            name: 'initialize',
+                            name: 'libraries/require/require',
                             include: [
                                 'modernizr',
                                 'libraries/require/require',
@@ -165,8 +165,7 @@ module.exports = function(grunt) {
                                 'jqueryFunctions',
                                 'backboneStickit',
                                 'domReady',
-                                'text',
-                                'initialize'
+                                'text'
                             ].concat(appular.plugins, appular.utilities)
                         }
                     ].concat(appular.routers, appular.components),
