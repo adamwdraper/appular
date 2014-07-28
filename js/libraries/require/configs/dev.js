@@ -35,7 +35,10 @@ requirejs.config({
     ],
     callback: function () {
         require([
-            'initialize'
-        ]);
+            'domReady!',
+            'appular'
+        ], function (doc, Appular) {
+            Appular.render();
+        });
     }
 });
