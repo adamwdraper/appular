@@ -3,17 +3,17 @@ define([
     'underscore',
     'backbone',
     './utility'
-], function ($, _, Backbone, store) {
+], function ($, _, Backbone, storage) {
     var localStorage = window.localStorage;
 
     beforeEach(function () {
         localStorage.clear();
     });
 
-    describe('Store Utility', function () {
+    describe('Storage Utility', function () {
         describe('Utility', function () {
             it('Exists', function () {
-                assert.ok(store);
+                assert.ok(storage);
             });
         });
 
@@ -21,28 +21,28 @@ define([
             it('can set and get a string', function () {
                 var test = 'true';
 
-                store.set('test', test);
+                storage.set('test', test);
 
-                expect(store.get('test')).to.be.a('string');
-                expect(store.get('test')).to.equal(test);
+                expect(storage.get('test')).to.be.a('string');
+                expect(storage.get('test')).to.equal(test);
             });
 
             it('can set and get a number', function () {
                 var test = 1;
 
-                store.set('test', test);
+                storage.set('test', test);
 
-                expect(store.get('test')).to.be.a('number');
-                expect(store.get('test')).to.equal(test);
+                expect(storage.get('test')).to.be.a('number');
+                expect(storage.get('test')).to.equal(test);
             });
 
             it('can set and get a boolean', function () {
                 var test = true;
 
-                store.set('test', test);
+                storage.set('test', test);
 
-                expect(store.get('test')).to.be.a('boolean');
-                expect(store.get('test')).to.equal(test);
+                expect(storage.get('test')).to.be.a('boolean');
+                expect(storage.get('test')).to.equal(test);
             });
 
             it('can set and get an object', function () {
@@ -51,10 +51,10 @@ define([
                     test2: 1
                 };
 
-                store.set('test', test);
+                storage.set('test', test);
 
-                expect(store.get('test')).to.be.an('object');
-                expect(store.get('test')).to.deep.equal(test);
+                expect(storage.get('test')).to.be.an('object');
+                expect(storage.get('test')).to.deep.equal(test);
             });
         });
 
@@ -62,11 +62,11 @@ define([
             it('can clear all', function () {
                 var test = 'true';
 
-                store.set('test', test);
+                storage.set('test', test);
 
-                store.clear();
+                storage.clear();
 
-                expect(store.get('test')).to.be.null;
+                expect(storage.get('test')).to.be.null;
             });
         });
 
@@ -74,11 +74,11 @@ define([
             it('can unset value', function () {
                 var test = 'true';
 
-                store.set('test', test);
+                storage.set('test', test);
 
-                store.unset('test');
+                storage.unset('test');
 
-                expect(store.get('test')).to.be.null;
+                expect(storage.get('test')).to.be.null;
             });
         });
     });

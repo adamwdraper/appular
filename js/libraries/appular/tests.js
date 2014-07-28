@@ -2,8 +2,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'appular'
-], function ($, _, Backbone, Appular) {
+    'appular',
+    'utilities/cookies/utility',
+    'utilities/storage/utility'
+], function ($, _, Backbone, Appular, cookies, storage) {
     describe('Appular', function () {
 
         it('Should have certain properties', function () {
@@ -33,7 +35,7 @@ define([
         it('Can load an appular router', function (done) {
             Backbone.once('appular:router:required', function (router) {
                 assert.ok(router);
-                expect(router).to.be.an.instanceOf(Backbone.Router);
+                expect(router).to.be.an.instanceOf(Object);
                 done();
             });
 
@@ -120,12 +122,25 @@ define([
                 var router;
 
                 beforeEach(function () {
+                    cookies.set('cookie', 'testing');
+                    storage.set('storage', 'testing');
+
                     var Router = Backbone.Router.extend({
-                        data: {
+                        params: {
                             k: {
                                 value: 'testing'
                             },
-                            x: 'test'
+                            x: 'test',
+                            cookie: {
+                                value: '',
+                                loadFrom: 'cookie',
+                                addToUrl: false
+                            },
+                            storage: {
+                                value: '',
+                                loadFrom: 'storage',
+                                addToUrl: false
+                            }
                         }
                     });
 
@@ -134,29 +149,39 @@ define([
 
                 it('Should have certain properties', function () {
                     assert.property(router, 'config');
-                    assert.property(router, 'data');
+                    assert.property(router, 'params');
                 });
 
-                describe('Data Collection', function () {
-                    it('should have a collection for data', function () {
+                describe('Params Collection', function () {
+                    it('should have a collection for params', function () {
                         assert.property(router, 'collection');
                     });
 
-                    it('should load data on construction', function () {
-                        expect(router.collection.get('k').get('value')).to.equal('testing');
-                        expect(router.collection.get('x').get('value')).to.equal('test');
+                    it('should load params on construction', function () {
+                        expect(router.get('k')).to.equal('testing');
+                        expect(router.get('x')).to.equal('test');
+                    });
+
+                    it('can load from a cookie', function () {
+                        router.collection.load();
+                        expect(router.get('cookie')).to.equal('testing');
+                    });
+
+                    it('can load from a storage', function () {
+                        router.collection.load();
+                        expect(router.get('storage')).to.equal('testing');
                     });
                 });
 
-                describe('Load data', function () {
+                describe('Initialize params', function () {
                     it('can load a string', function () {
-                        router.loadData('k=testing');
+                        router.loadParams('k:testing');
 
-                        expect(router.collection.get('k').get('value')).to.equal('testing');
+                        expect(router.get('k')).to.equal('testing');
                     });
                     
                     it('can load an object', function () {
-                        router.loadData({
+                        router.loadParams({
                             k: 'testing'
                         });
 
@@ -166,7 +191,7 @@ define([
 
                 describe('Navigate', function () {
                     it('can generate a hash', function () {
-                        expect(router.getDataHash()).to.equal('k=testing&x=test');
+                        expect(router.getParamsHash()).to.equal('k:testing/x:test');
                     });
                 });
             });

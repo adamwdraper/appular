@@ -19,7 +19,7 @@ requirejs.config({
     baseUrl: '/base',
     config: {
         'appular': {
-            env: 'develop',
+            env: 'test',
             useFixtures: true
         }
     },
@@ -31,6 +31,8 @@ requirejs.config({
         'underscore': 'libraries/underscore/underscore',
         'backbone': 'libraries/backbone/backbone',
         'backboneStickit': 'libraries/backbone/extensions/stickit',
+        'moment': 'libraries/moment/moment',
+        'numeral': 'libraries/numeral/numeral',
         'domReady': 'libraries/require/plugins/domReady',
         'async': 'libraries/require/plugins/async',
         'json': 'libraries/require/plugins/json',
