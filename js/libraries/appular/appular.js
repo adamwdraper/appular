@@ -1,11 +1,11 @@
 /**
- * @appular appular v1.0.0
+ * @appular appular v1.0.1
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 1.0.0
+// version : 1.0.1
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -19,6 +19,7 @@ define([
     'utilities/storage/utility'
 ], function (module, $, _, Backbone, cookies, storage) {
     var Appular = {},
+        $html = $('html'),
         $body = $('body'),
         $window = $('window'),
         $document = $('document'),
@@ -36,7 +37,7 @@ define([
             'router'
         ];
 
-    Appular.version = '1.0.0';
+    Appular.version = '1.0.1';
 
     Appular.router = '';
 
@@ -138,12 +139,20 @@ define([
                 this.$window = $window;
                 this.$document = $document;
                 this.$body = $body;
+                this.$html = $html;
 
                 options = options || {};
 
                 // add router when sent in
                 if (options.router) {
                     this.router = options.router;
+                }
+
+                // add model when sent in
+                if (options.model) {
+                    this.model = options.model;
+
+                    delete options.model;
                 }
 
                 // set up on's or listenTo's from the listeners object
@@ -401,14 +410,16 @@ define([
                         var id = params.split(this.separators.keyValue)[0],
                             value = params.split(this.separators.keyValue)[1];
 
-                        if (value.indexOf(this.separators.array) !== -1) {
-                            value = value.split(this.separators.array);
-                        }
+                        if (value) {
+                            if (value.indexOf(this.separators.array) !== -1) {
+                                value = value.split(this.separators.array);
+                            }
 
-                        models.push({
-                            id: id,
-                            value: value
-                        });
+                            models.push({
+                                id: id,
+                                value: value
+                            });
+                        }
                     }, this);
                 }
                 
