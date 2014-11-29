@@ -1,43 +1,34 @@
 /**
- * @appular appular v1.0.1
+ * @appular appular v1.0.2
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 1.0.1
+// version : 1.0.2
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
 
 define([
+    'domReady!',
     'module',
     'jquery',
     'underscore',
     'backbone',
     'utilities/cookies/utility',
     'utilities/storage/utility'
-], function (module, $, _, Backbone, cookies, storage) {
+], function (doc, module, $, _, Backbone, cookies, storage) {
     var Appular = {},
         $html = $('html'),
         $body = $('body'),
-        $window = $('window'),
-        $document = $('document'),
+        $window = $(window),
+        $document = $(document),
         router,
-        $components,
-        viewOptions = [
-            'model',
-            'collection',
-            'el',
-            'id',
-            'attributes',
-            'className',
-            'tagName',
-            'events',
-            'router'
-        ];
+        $components = [],
+        requiredComponents = 0;
 
-    Appular.version = '1.0.1';
+    Appular.version = '1.0.0';
 
     Appular.router = '';
 
@@ -110,6 +101,12 @@ define([
                 Appular.components[name] = new Component(options);
 
                 Backbone.trigger('appular:component:required', Appular.components[name]);
+
+                requiredComponents++;
+
+                if (requiredComponents === $components.length) {
+                    Backbone.trigger('appular:components:required');
+                }
             });
         }
     };
@@ -143,12 +140,10 @@ define([
 
                 options = options || {};
 
-                // add router when sent in
-                if (options.router) {
-                    this.router = options.router;
-                }
+                // add router
+                this.router = Appular.router;
 
-                // add model when sent in
+                // add model when sent in so we can assign listeners to it
                 if (options.model) {
                     this.model = options.model;
 
@@ -158,16 +153,11 @@ define([
                 // set up on's or listenTo's from the listeners object
                 _.each(this.listeners, function (value, key) {
                     var events = key.split(' '),
-                        property = _.last(events),
                         callback = _.isFunction(value) ? value : this[value];
 
-                    // find out if we are listening to router, model, or collection so that we can use listenTo
-                    if (property === 'router' || property === 'model' || property === 'collection') {
-                        events.pop();
-                    } else {
-                        property = null;
-                    }
-
+                    // find out if we are listening to property so that we can use listenTo
+                    property = events.length > 1 ? events.pop() : null;
+    
                     // add route appopriate listening action
                     if (property) {
                         if (this[property]) {
@@ -219,6 +209,12 @@ define([
                 }
 
                 return Model.prototype.fetch.apply(this, arguments);
+            },
+            /**
+            @function toggle - shortcut to toggle a booleans value
+            */
+            toggle: function (name) {
+                this.set(name, !this.get(name));
             }
         });
     })(Backbone.Model);

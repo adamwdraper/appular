@@ -17,9 +17,8 @@ requirejs.config({
     ],
     callback: function () {
         require([
-            'domReady!',
             'appular'
-        ], function (doc, Appular) {
+        ], function (Appular) {
             Appular.render();
         });
     }
