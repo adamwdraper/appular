@@ -28,7 +28,7 @@ define([
         $components = [],
         requiredComponents = 0;
 
-    Appular.version = '1.0.0';
+    Appular.version = '1.0.2';
 
     Appular.router = '';
 
