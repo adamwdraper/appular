@@ -9,8 +9,6 @@ Appular isn't a framework.  It does a couple of nice things, like loading module
 - Eliminate spagetti code that can occur even when a JS framework is being used
 - Create documentation for your modules from inline comments
 
-## Slideshow
-[http://slid.es/adamwdraper/appular](http://slid.es/adamwdraper/appular)
 
 ## Concepts
 In Appular there are 4 different types of modules.
@@ -39,7 +37,7 @@ Included these scripts based on environment.  This way debuging is easy since no
 
 ```
 // Production Environment
-<script src="/js/build/initialize.js"></script>
+<script src="/js/build/libraries/require/require.js"></script>
 ```
 
 Then add data attributes to elements that you want to attach components too, and Appular will load them for you.
