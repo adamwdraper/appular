@@ -28,7 +28,7 @@ define([
         $components = [],
         requiredComponents = 0;
 
-    Appular.version = '1.0.0';
+    Appular.version = '1.0.2';
 
     Appular.router = '';
 
@@ -480,13 +480,6 @@ define([
             }
         });
     })(Backbone.Router);
-
-    // add config for template variable syntax
-    _.templateSettings = {
-        evaluate: /\{\{#([\s\S]+?)\}\}/g, // {{# console.log("blah") }}
-        interpolate: /\{\{\{([\s\S]+?)\}\}\}/g, // {{{ title }}}
-        escape: /\{\{[^#\{]([\s\S]+?)[^\}]\}\}/g, // {{ title }}
-    };
 
     // set up listeners
     // Start history to tigger first route

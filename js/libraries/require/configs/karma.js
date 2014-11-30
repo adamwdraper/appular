@@ -25,28 +25,22 @@ requirejs.config({
     },
     paths: {
         'appular': 'libraries/appular/appular',
-        'modernizr': 'libraries/modernizr/modernizr',
         'jquery': 'libraries/jquery/jquery',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
         'underscore': 'libraries/underscore/underscore',
+        'underscoreTemplate': 'libraries/underscore/extensions/template',
         'backbone': 'libraries/backbone/backbone',
         'backboneStickit': 'libraries/backbone/extensions/stickit',
         'moment': 'libraries/moment/moment',
         'numeral': 'libraries/numeral/numeral',
         'domReady': 'libraries/require/plugins/domReady',
-        'async': 'libraries/require/plugins/async',
-        'json': 'libraries/require/plugins/json',
         'template': 'libraries/require/plugins/template',
         'text': 'libraries/require/plugins/text'
-    },
-    shim: {
-        'modernizr': {
-            exports: 'Modernizr'
-        }
     },
     deps: [
         'appular',
         'jqueryFunctions',
+        'underscoreTemplate',
         'backboneStickit'
     ].concat(allTestFiles),
     callback: window.__karma__.start
