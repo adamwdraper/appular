@@ -79,6 +79,17 @@ module.exports = function(grunt) {
                 tasks: ['test']
             }
         },
+        concurrent: {
+            build: [
+                'jshint',
+                'karma:ci',
+                'requirejs'
+            ],
+            test: [
+                'jshint',
+                'karma:ci'
+            ]
+        },
         express: {
             options: {
                 port: 5000
@@ -178,12 +189,10 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('test', 'Runs tests', [
-        'jshint',
-        'karma:ci'
+        'concurrent:test'
     ]);
 
     grunt.registerTask('build', 'Hints and builds production JS, runs tests, builds JS documentation', [
-        'test',
-        'requirejs'
+        'concurrent:build'
     ]);
 };
