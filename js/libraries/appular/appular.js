@@ -481,13 +481,6 @@ define([
         });
     })(Backbone.Router);
 
-    // add config for template variable syntax
-    _.templateSettings = {
-        evaluate: /\{\{#([\s\S]+?)\}\}/g, // {{# console.log("blah") }}
-        interpolate: /\{\{\{([\s\S]+?)\}\}\}/g, // {{{ title }}}
-        escape: /\{\{[^#\{]([\s\S]+?)[^\}]\}\}/g, // {{ title }}
-    };
-
     // set up listeners
     // Start history to tigger first route
     Backbone.on('appular:router:required', function (router) {

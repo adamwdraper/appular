@@ -139,6 +139,7 @@ module.exports = function(grunt) {
                         'jquery': 'empty:',
                         'jqueryFunctions': 'libraries/jquery/extensions/functions',
                         'underscore': 'libraries/underscore/underscore',
+                        'underscoreTemplate': 'libraries/underscore/extensions/template',
                         'backbone': 'libraries/backbone/backbone',
                         'backboneStickit': 'libraries/backbone/extensions/stickit',
                         'domReady': 'libraries/require/plugins/domReady',
@@ -163,6 +164,7 @@ module.exports = function(grunt) {
                                 'backbone',
                                 'appular',
                                 'jqueryFunctions',
+                                'underscoreTemplate',
                                 'backboneStickit',
                                 'domReady',
                                 'text'

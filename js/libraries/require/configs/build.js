@@ -13,6 +13,7 @@ requirejs.config({
     deps: [
         'modernizr',
         'jqueryFunctions',
+        'underscoreTemplate',
         'backboneStickit'
     ],
     callback: function () {

@@ -29,6 +29,7 @@ requirejs.config({
         'jquery': 'libraries/jquery/jquery',
         'jqueryFunctions': 'libraries/jquery/extensions/functions',
         'underscore': 'libraries/underscore/underscore',
+        'underscoreTemplate': 'libraries/underscore/extensions/template',
         'backbone': 'libraries/backbone/backbone',
         'backboneStickit': 'libraries/backbone/extensions/stickit',
         'moment': 'libraries/moment/moment',
@@ -47,6 +48,7 @@ requirejs.config({
     deps: [
         'appular',
         'jqueryFunctions',
+        'underscoreTemplate',
         'backboneStickit'
     ].concat(allTestFiles),
     callback: window.__karma__.start
