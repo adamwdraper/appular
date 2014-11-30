@@ -1,16 +1,12 @@
 define([
     'underscore',
-    'backbone',
-    'modernizr'
-], function (_, Backbone, modernizr) {
+    'backbone'
+], function (_, Backbone) {
     var View = Backbone.View.extend({
             events: {},
             initialize: function () {},
             render: function () {
                 return this;
-            },
-            local: function () {
-                return modernizr.localStorage;
             },
             set: function (name, value) {
                 window.localStorage.setItem(name, JSON.stringify(value));
