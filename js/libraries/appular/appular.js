@@ -1,11 +1,11 @@
 /**
- * @appular appular v1.0.2
+ * @appular appular v1.0.3
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 1.0.2
+// version : 1.0.3
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -28,7 +28,7 @@ define([
         $components = [],
         requiredComponents = 0;
 
-    Appular.version = '1.0.2';
+    Appular.version = '1.0.3';
 
     Appular.router = '';
 
@@ -323,8 +323,11 @@ define([
 
                 options = options || {};
 
-                if (model.get('loadFromCookie')) {
-                    cookies.set(model.getId(), value);
+                // persist data to cookie or storage if necessary
+                if (model.get('loadFrom') === 'cookie') {
+                    cookies.set(id, value);
+                } else if (model.get('loadFrom') === 'storage') {
+                    storage.set(id, value);
                 }
 
                 return this.get(id).set({

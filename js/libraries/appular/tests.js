@@ -83,6 +83,7 @@ define([
                     assert.property(view, '$window');
                     assert.property(view, '$document');
                     assert.property(view, '$body');
+                    assert.property(view, '$html');
                 });
 
                 it('creates an router property', function () {
@@ -166,10 +167,33 @@ define([
                         router.collection.load();
                         expect(router.get('cookie')).to.equal('testing');
                     });
+                });
 
-                    it('can load from a storage', function () {
+                describe('Params Model', function () {
+                    it('can get', function () {
                         router.collection.load();
-                        expect(router.get('storage')).to.equal('testing');
+                        expect(router.get('cookie')).to.equal('testing');
+                    });
+
+                    it('can save', function () {
+                        router.collection.load();
+
+                        router.set('cookie', 'test');
+                        expect(router.get('cookie')).to.equal('test');
+                    });
+
+                    it('can save to cookie', function () {
+                        router.collection.load();
+
+                        router.set('cookie', 'test');
+                        expect(cookies.get('cookie')).to.equal('test');
+                    });
+
+                    it('can save to storage', function () {
+                        router.collection.load();
+
+                        router.set('storage', 'test');
+                        expect(storage.get('storage')).to.equal('test');
                     });
                 });
 
