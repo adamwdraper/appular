@@ -6,11 +6,12 @@ requirejs.config({
     baseUrl: '/js/build',
     paths: {
         'jquery': [
-            '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
+            '//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min',
             'libraries/jquery/jquery'
         ]
     },
     deps: [
+        'log',
         'jqueryFunctions',
         'underscoreTemplate',
         'backboneStickit'

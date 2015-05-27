@@ -17,11 +17,13 @@ requirejs.config({
         'underscoreTemplate': 'libraries/underscore/extensions/template',
         'backbone': 'libraries/backbone/backbone',
         'backboneStickit': 'libraries/backbone/extensions/stickit',
+        'log': 'libraries/log/log',
         'domReady': 'libraries/require/plugins/domReady',
         'template': 'libraries/require/plugins/template',
         'text': 'libraries/require/plugins/text'
     },
     deps: [
+        'log',
         'jqueryFunctions',
         'underscoreTemplate',
         'backboneStickit'
