@@ -25,9 +25,11 @@ define([
         $body = $('body'),
         $window = $(window),
         $document = $(document),
-        // the router
-        router,
+        // the router name
+        $router,
+        // all components on page
         $components,
+        // count of required components
         requiredComponents = 0,
         viewOptions = [
             'model',
@@ -43,7 +45,7 @@ define([
 
     Appular.version = '2.0.0';
 
-    Appular.router = '';
+    Appular.router = null;
 
     Appular.components = {};
 
@@ -62,6 +64,19 @@ define([
     };
 
     Appular.initialize = {
+        router: function () {
+            var name = $router.data('appularRouter'),
+                options = {};
+
+            // add any data attributes to the routers options
+            _.each($router.data(), function (value, key) {
+                if (key !== 'appularRouter') {
+                    options[key] = value;
+                }
+            });
+
+            Appular.require.router(name, options);
+        },
         components: function () {
             _.each($components, function (element) {
                 var $element = $(element),
@@ -83,7 +98,7 @@ define([
     };
 
     Appular.require = {
-        router: function (name) {
+        router: function (name, options) {
             var path = 'routers/' + name + '/router';
 
             require([
@@ -92,7 +107,7 @@ define([
                 // log load in dev
                 Appular.log('Router', name, path);
 
-                Appular.router = new Router();
+                Appular.router = new Router(options);
 
                 Backbone.trigger('appular:router:required', Appular.router);
             });
@@ -120,11 +135,11 @@ define([
     
     // Kick it all off by finding the router and components
     Appular.render = function () {
-        router = $('body').data('appular-router');
+        $router = $body;
         $components = $('[data-appular-component]');
 
-        if (router) {
-            Appular.require.router(router);
+        if ($router.data('appular-router')) {
+            Appular.initialize.router();
         } else {
             throw new Error('Appular : No router found');
         }
@@ -160,6 +175,7 @@ define([
                     delete options.model;
                 }
 
+                // add any data properties to data object
                 _.each(options, function (value, key) {
                     if (!_.contains(viewOptions, key)) {
                         this.data[key] = value
@@ -398,12 +414,19 @@ define([
             start: function () {
                 Backbone.history.start(this.history);
             },
-            constructor: function() {
+            constructor: function(options) {
                 // add common selectors
                 this.$window = $window;
                 this.$document = $document;
                 this.$body = $body;
                 this.$html = $html;
+
+                this.data = {};
+
+                // add any data properties to data object
+                _.each(options, function (value, key) {
+                    this.data[key] = value
+                }, this);
 
                 // add any params to collection
                 _.each(this.params, function (value, key) {

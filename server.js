@@ -13,6 +13,10 @@ app.get('/', function (req, res) {
     res.sendfile('index.html');
 });
 
+app.get('/test/?*', function (req, res) {
+    res.sendfile('test.html');
+});
+
 // Listen ---------------------------------------
 app.listen(port, function () {
     console.log('Listening on port ' + port);
