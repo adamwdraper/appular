@@ -1,11 +1,11 @@
 /**
- * @appular appular v1.0.4
+ * @appular appular v2.0.0
  * @link https://github.com/adamwdraper/Appular
  * @define appular
  */
 
 // Appular
-// version : 1.0.4
+// version : 2.0.0
 // author : Adam Draper
 // license : MIT
 // https://github.com/adamwdraper/Appular
@@ -41,7 +41,7 @@ define([
             'router'
         ];
 
-    Appular.version = '1.0.4';
+    Appular.version = '2.0.0';
 
     Appular.router = '';
 
@@ -282,30 +282,31 @@ define([
                 }, this);
             },
             // Sets params based on url params on initial load (ignores any params that are not defined in router)
-            load: function (params) {
+            loadParams: function (params) {
                 // params sent from router
-                // _.each(params, function (param) {
-                //     var id = param.id,
-                //         value = param.value,
-                //         model = this.get(id);
+                _.each(params, function (param) {
+                    var id = param.id,
+                        value = param.value,
+                        model = this.get(id);
 
-                //     // check for alias match
-                //     if (!model) {
-                //         model = _.find(this.models, function (model) {
-                //             return model.get('alias') === id;
-                //         });
-                //     }
+                    // check for alias match
+                    if (!model) {
+                        model = _.find(this.models, function (model) {
+                            return model.get('alias') === id;
+                        });
+                    }
 
-                //     if (model) {
-                //         model.set({
-                //             value: value
-                //         }, {
-                //             silent: true
-                //         });
-                //     }
-                // }, this);
-
-                // params from url, cookies or storage
+                    if (model) {
+                        model.set({
+                            value: value
+                        }, {
+                            silent: true
+                        });
+                    }
+                }, this);
+            },
+            load: function () {
+                // load params from url, cookies or storage
                 _.each(this.models, function (model) {
                     var value;
 
@@ -392,7 +393,10 @@ define([
                 });
             },
             setup: function () {
-                Backbone.trigger('appular:router:setup');
+                this.start();
+            },
+            start: function () {
+                Backbone.history.start(this.history);
             },
             constructor: function() {
                 // add common selectors
@@ -436,42 +440,31 @@ define([
                 // call original constructor
                 Router.apply(this, arguments);
             },
-            // routes: {
-            //     '*params': 'action'
-            // },
-            // action: function (params) {
-            //     this.loadParams(params);
-            // },
-            // loadParams: function (params) {
-                // var models = [];
+            loadParams: function (params) {
+                var models = [];
                 
-                // if (_.isObject(params)) {
-                //     _.each(params, function (value, key) {
-                //         models.push({
-                //             id: key,
-                //             value: value
-                //         });
-                //     });
-                // } else if (_.isString(params)) {
-                //     _.each(params.split(this.separators.param), function (params) {
-                //         var id = params.split(this.separators.keyValue)[0],
-                //             value = params.split(this.separators.keyValue)[1];
+                _.each(params.split(this.separators.param), function (params) {
+                    var id = params.split(this.separators.keyValue)[0],
+                        value = params.split(this.separators.keyValue)[1];
 
-                //         if (value) {
-                //             if (value.indexOf(this.separators.array) !== -1) {
-                //                 value = value.split(this.separators.array);
-                //             }
+                    if (value) {
+                        if (value.indexOf(this.separators.array) !== -1) {
+                            value = value.split(this.separators.array);
+                        }
 
-                //             models.push({
-                //                 id: id,
-                //                 value: value
-                //             });
-                //         }
-                //     }, this);
-                // }
-                
-                // this.collection.load(models);
-            // },
+                        models.push({
+                            id: id,
+                            value: value
+                        });
+                    }
+                }, this);
+
+                if (models.length) {
+                    this.collection.set(models, {
+                        remove: false
+                    });
+                }
+            },
             getParamsHash: function () {
                 // Generate and navigate to new hash
                 var params = [],
@@ -533,21 +526,6 @@ define([
     })(Backbone.Router);
 
     // set up listeners
-    // Start history to tigger first route
-    // Backbone.on('appular:router:required', function (router) {
-    //     Backbone.history.start(router.history);
-    // });
-
-    // // Require all components when router is ready
-    // Backbone.on('appular:params:initialized', function () {
-    //     Appular.initialize.components();
-    // });
-
-    // // Render component after it is required 
-    // Backbone.on('appular:component:required', function (component) {
-    //     component.render();
-    // });
-
     Backbone.on('appular:router:required', function () {
         Appular.initialize.components();
     });
@@ -556,12 +534,9 @@ define([
         Appular.router.setup();
     });
 
-    Backbone.on('appular:router:setup', function () {
-        Backbone.history.start(Appular.router.history);
-    });
-
     // log major libraries being used
     Appular.log('Library', 'Appular', 'v' + Appular.version);
+    Appular.log('Library', 'Require', 'v' + require.version);
     Appular.log('Library', 'jQuery', 'v' + $().jquery);
     Appular.log('Library', 'Backbone', 'v' + Backbone.VERSION);
     Appular.log('Library', 'Underscore', 'v' + _.VERSION);
