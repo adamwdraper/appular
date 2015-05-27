@@ -11,6 +11,7 @@ requirejs.config({
         ]
     },
     deps: [
+        'log',
         'jqueryFunctions',
         'underscoreTemplate',
         'backboneStickit'
