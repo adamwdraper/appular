@@ -21,8 +21,6 @@ define([
 
                 log('component', 'data', this.data);
 
-                this.router.set('hash', 'hash updated');
-
                 return this;
             }
         });
