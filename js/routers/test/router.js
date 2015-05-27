@@ -29,6 +29,10 @@ define([
             setup: function () {
                 log('setup');
 
+                log('router', 'data', this.data);
+
+                log('router', 'components', this.components);
+
                 this.start();
             },
             routes: {

@@ -1,5 +1,5 @@
 /**
- * @appular boilerplate
+ * @appular test
  */
 
 define([
@@ -15,13 +15,11 @@ define([
             render: function () {
                 this.$el.html(this.template());
 
-                log('component', 'data', this.data);
-                
-                log('router', 'data', this.router.data);
-                
                 this.router.collection.each(function (param) {
                     log('router', param.getId(), param.getValue(), param);
                 });
+
+                log('component', 'data', this.data);
 
                 return this;
             }
