@@ -9,12 +9,18 @@ define([
     'utilities/cookies/utility'
 ], function ($, _, Backbone, storage, cookies) {
     var Router = Backbone.Router.extend({
-            history: {
-                pushState: true,
-                root: '/test/'
-            },
+            history: {},
             params: {
-                url: null,
+                hash: {
+                    value: null,
+                    loadFrom: 'hash',
+                    addToUrl: true
+                },
+                query: {
+                    value: null,
+                    loadFrom: 'query',
+                    addToUrl: false
+                },
                 storage: {
                     value: null,
                     loadFrom: 'storage',
@@ -38,9 +44,7 @@ define([
             routes: {
                 '*params': 'action'
             },
-            action: function (params) {
-                this.loadParams(params);
-
+            action: function () {
                 this.renderAll();
             }
         });

@@ -41,7 +41,12 @@ define([
             'tagName',
             'events',
             'router'
-        ];
+        ],
+        separators = {
+            param: '/',
+            keyValue: ':',
+            array: '|'
+        };
 
     Appular.version = '2.0.0';
 
@@ -261,6 +266,7 @@ define([
     })(Backbone.Model);
 
     var RouterCollection = Backbone.Collection.extend({
+            separators: separators,
             model: Backbone.Model.extend({
                 defaults: {
                     id: '',
@@ -297,41 +303,33 @@ define([
                     }, this);
                 }, this);
             },
-            // Sets params based on url params on initial load (ignores any params that are not defined in router)
-            loadParams: function (params) {
-                // params sent from router
-                _.each(params, function (param) {
-                    var id = param.id,
-                        value = param.value,
-                        model = this.get(id);
-
-                    // check for alias match
-                    if (!model) {
-                        model = _.find(this.models, function (model) {
-                            return model.get('alias') === id;
-                        });
-                    }
-
-                    if (model) {
-                        model.set({
-                            value: value
-                        }, {
-                            silent: true
-                        });
-                    }
-                }, this);
-            },
             load: function () {
-                // load params from url, cookies or storage
-                _.each(this.models, function (model) {
-                    var value;
+                var params = Backbone.history.getHash().split(this.separators.param),
+                    hash = {};
 
-                    if (model.get('loadFrom') === 'url') {
-                        value = $.getParameterByName(model.getId());
-                    } else if (model.get('loadFrom') === 'cookie') {
-                        value = cookies.get(model.getId());
-                    } else if (model.get('loadFrom') === 'storage') {
-                        value = storage.get(model.getId());
+                    // turn hash into map
+                    _.each(params, function (param) {
+                        hash[param.split(this.separators.keyValue)[0]] = param.split(this.separators.keyValue)[1];
+                    }, this);
+                
+                // load params from hash, url, cookies, or storage
+                _.each(this.models, function (model) {
+                    var value,
+                        id = model.getId();
+
+                    switch(model.get('loadFrom')) {
+                        case 'hash':
+                            value = hash[id];
+                            break;
+                        case 'query':
+                            value = $.getParameterByName(id);
+                            break;
+                        case 'cookie':
+                            value = cookies.get(id);
+                            break;
+                        case 'storage':
+                            value = storage.get(id);
+                            break;
                     }
 
                     if (value) {
@@ -386,21 +384,13 @@ define([
         return Router.extend({
             config: Appular.config,
             params: {},
-            separators: {
-                param: '/',
-                keyValue: ':',
-                array: '|'
-            },
-            // where the router will read the initial params from.  options: hash or query
-            loadFrom: 'hash',
+            separators: separators,
             collection: new RouterCollection(),
             components: Appular.components,
             routes: {
                 '*params': 'action'
             },
             action: function (params) {
-                // this.loadParams(params);
-
                 this.renderAll();
             },
             renderAll: function () {
@@ -456,6 +446,7 @@ define([
                 // load params
                 this.collection.load();
 
+                // update hash on change
                 this.collection.on('change', function (param) {
                     this.navigateHash(!param.get('addToHistory'));
                 }, this);
@@ -463,36 +454,19 @@ define([
                 // call original constructor
                 Router.apply(this, arguments);
             },
-            loadParams: function (params) {
-                var models = [];
-                
-                _.each(params.split(this.separators.param), function (params) {
-                    var id = params.split(this.separators.keyValue)[0],
-                        value = params.split(this.separators.keyValue)[1];
-
-                    if (value) {
-                        if (value.indexOf(this.separators.array) !== -1) {
-                            value = value.split(this.separators.array);
-                        }
-
-                        models.push({
-                            id: id,
-                            value: value
-                        });
-                    }
-                }, this);
-
-                if (models.length) {
-                    this.collection.set(models, {
-                        remove: false
-                    });
-                }
-            },
             getParamsHash: function () {
                 // Generate and navigate to new hash
                 var params = [],
                     hash = '',
-                    value;
+                    value,
+                    currentParams = Backbone.history.getHash().split(this.separators.param);
+
+                    // add non params
+                    _.each(currentParams, function (param) {
+                        if (param.indexOf(this.separators.keyValue) === -1) {
+                            params.push(param)
+                        }
+                    }, this);
 
                 this.collection.each(function (model) {
                     if (model.get('addToUrl')) {
@@ -505,8 +479,7 @@ define([
                         }
 
                         if (value) {
-                            // use alias if it is defined
-                            params.push((model.get('alias') ? model.get('alias') : model.get('id')) + this.separators.keyValue + value);
+                            params.push(model.getId() + this.separators.keyValue + value);
                         }
                     }
                 }, this);
@@ -521,7 +494,6 @@ define([
                 var hash = this.getParamsHash();
 
                 this.navigate(hash, {
-                    trigger: false,
                     replace: replace
                 });
             },
