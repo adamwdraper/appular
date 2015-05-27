@@ -41,12 +41,7 @@ define([
             'tagName',
             'events',
             'router'
-        ],
-        separators = {
-            param: '/',
-            keyValue: ':',
-            array: '|'
-        };
+        ];
 
     Appular.version = '2.0.0';
 
@@ -266,7 +261,6 @@ define([
     })(Backbone.Model);
 
     var RouterCollection = Backbone.Collection.extend({
-            separators: separators,
             model: Backbone.Model.extend({
                 defaults: {
                     id: '',
@@ -293,55 +287,12 @@ define([
                 }
             }),
             initialize: function () {
-                _.bindAll(this, 'load');
-
                 this.on('add', function (model) {
                     model.on('change:value', function () {
                         this.trigger('change:' + model.get('id'), model, model.get('id'));
 
                         this.persistValue(model, model.get('value'));
                     }, this);
-                }, this);
-            },
-            load: function (data) {
-                var params = Backbone.history.getHash().split(this.separators.param),
-                    hash = {};
-
-                    // turn hash into map
-                    _.each(params, function (param) {
-                        hash[param.split(this.separators.keyValue)[0]] = param.split(this.separators.keyValue)[1];
-                    }, this);
-                
-                // load params from hash, url, cookies, or storage
-                _.each(this.models, function (model) {
-                    var value,
-                        id = model.getId();
-
-                    switch(model.get('loadFrom')) {
-                        case 'data':
-                            value = data[id];
-                            break;
-                        case 'hash':
-                            value = hash[id];
-                            break;
-                        case 'query':
-                            value = $.getParameterByName(id);
-                            break;
-                        case 'cookie':
-                            value = cookies.get(id);
-                            break;
-                        case 'storage':
-                            value = storage.get(id);
-                            break;
-                    }
-
-                    if (value) {
-                        model.set({
-                            value: value
-                        }, {
-                            silent: true
-                        });
-                    }
                 }, this);
             },
             /**
@@ -387,7 +338,11 @@ define([
         return Router.extend({
             config: Appular.config,
             params: {},
-            separators: separators,
+            separators: {
+                param: '/',
+                keyValue: ':',
+                array: '|'
+            },
             collection: new RouterCollection(),
             components: Appular.components,
             routes: {
@@ -447,7 +402,7 @@ define([
                 }, this);
 
                 // load params
-                this.collection.load(this.data);
+                this.load();
 
                 // update hash on change
                 this.collection.on('change', function (param) {
@@ -456,6 +411,47 @@ define([
 
                 // call original constructor
                 Router.apply(this, arguments);
+            },
+            load: function () {
+                var params = Backbone.history.getHash().split(this.separators.param),
+                    hash = {};
+
+                // turn hash into map
+                _.each(params, function (param) {
+                    hash[param.split(this.separators.keyValue)[0]] = param.split(this.separators.keyValue)[1];
+                }, this);
+                
+                // load params from hash, url, cookies, or storage
+                _.each(this.collection.models, function (model) {
+                    var value,
+                        id = model.getId();
+
+                    switch(model.get('loadFrom')) {
+                        case 'data':
+                            value = this.data[id];
+                            break;
+                        case 'hash':
+                            value = hash[id];
+                            break;
+                        case 'query':
+                            value = $.getParameterByName(id);
+                            break;
+                        case 'cookie':
+                            value = cookies.get(id);
+                            break;
+                        case 'storage':
+                            value = storage.get(id);
+                            break;
+                    }
+
+                    if (value) {
+                        model.set({
+                            value: value
+                        }, {
+                            silent: true
+                        });
+                    }
+                }, this);
             },
             generateHash: function () {
                 var params = [],
