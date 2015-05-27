@@ -391,6 +391,9 @@ define([
                     component.render();
                 });
             },
+            setup: function () {
+                Backbone.trigger('appular:router:setup');
+            },
             constructor: function() {
                 // add common selectors
                 this.$window = $window;
@@ -549,8 +552,12 @@ define([
         Appular.initialize.components();
     });
 
-    Backbone.on('appular:components:required', function (component) {
-        Backbone.history.start(router.history);
+    Backbone.on('appular:components:required', function () {
+        Appular.router.setup();
+    });
+
+    Backbone.on('appular:router:setup', function () {
+        Backbone.history.start(Appular.router.history);
     });
 
     // log major libraries being used
