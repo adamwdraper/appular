@@ -26,9 +26,9 @@ define([
         $window = $(window),
         $document = $(document),
         // the router name
-        $router,
+        $router = [],
         // all components on page
-        $components,
+        $components = [],
         // count of required components
         requiredComponents = 0,
         viewOptions = [
@@ -126,7 +126,7 @@ define([
 
                 requiredComponents++;
 
-                if (requiredComponents === $components.length) {
+                if (requiredComponents >= $components.length) {
                     Backbone.trigger('appular:components:required');
                 }
             });
@@ -333,7 +333,6 @@ define([
             }
         });
 
-    // Extend backbone router
     Backbone.Router = (function(Router) {
         return Router.extend({
             config: Appular.config,
@@ -457,7 +456,7 @@ define([
                 var params = [],
                     hash = '',
                     value,
-                    currentParams = Backbone.history.getHash().split(this.separators.param);
+                    currentParams = Backbone.history.getHash() ? Backbone.history.getHash().split(this.separators.param) : [];
 
                     // add non params
                     _.each(currentParams, function (param) {

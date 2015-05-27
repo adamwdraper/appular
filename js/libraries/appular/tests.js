@@ -23,24 +23,24 @@ define([
             assert.property(Appular.config, 'env');
         });
 
-        it('Can load an appular component', function (done) {
-            Backbone.once('appular:component:required', function (component) {
-                assert.ok(component);
-                done();
-            });
+        // it('Can load an appular router', function (done) {
+        //     Backbone.once('appular:router:required', function (router) {
+        //         assert.ok(router);
+        //         expect(router).to.be.an.instanceOf(Object);
+        //         done();
+        //     });
 
-            Appular.require.component('_boilerplate', { foo: 'bar' });
-        });
+        //     Appular.require.router('_boilerplate');
+        // });
 
-        it('Can load an appular router', function (done) {
-            Backbone.once('appular:router:required', function (router) {
-                assert.ok(router);
-                expect(router).to.be.an.instanceOf(Object);
-                done();
-            });
+        // it('Can load an appular component', function (done) {
+        //     Backbone.once('appular:components:required', function (component) {
+        //         assert.ok(component);
+        //         done();
+        //     });
 
-            Appular.require.router('_boilerplate');
-        });
+        //     Appular.require.component('_boilerplate', { foo: 'bar' });
+        // });
 
         describe('Appular Backbone Object Extenstions', function () {
 
@@ -48,9 +48,7 @@ define([
                 var view;
 
                 beforeEach(function () {
-                    var router = new Backbone.Router(),
-                        View = Backbone.View.extend({
-                            router: router,
+                    var View = Backbone.View.extend({
                             listeners: {
                                 'change:test model': 'test',
                                 'add collection': 'test',
@@ -66,7 +64,11 @@ define([
                             test: sinon.spy()
                         });
 
-                    view = new View();
+                    Appular.router = new Backbone.Router();
+
+                    view = new View({
+                        data: 'data'
+                    });
                 });
 
                 it('should be an object', function () {
@@ -84,6 +86,11 @@ define([
                     assert.property(view, '$document');
                     assert.property(view, '$body');
                     assert.property(view, '$html');
+                });
+
+                it('should have data properties', function () {
+                    assert.property(view, 'data');
+                    expect(view.data.data).to.equal('data');
                 });
 
                 it('creates an router property', function () {
@@ -141,11 +148,18 @@ define([
                                 value: '',
                                 loadFrom: 'storage',
                                 addToUrl: false
+                            },
+                            data: {
+                                value: null,
+                                loadFrom: 'data',
+                                addToUrl: false
                             }
                         }
                     });
 
-                    router = new Router();
+                    router = new Router({
+                        data: 'data'
+                    });
                 });
 
                 it('Should have certain properties', function () {
@@ -161,61 +175,46 @@ define([
                     it('should load params on construction', function () {
                         expect(router.get('k')).to.equal('testing');
                         expect(router.get('x')).to.equal('test');
+                        expect(router.get('data')).to.equal('data');
                     });
 
                     it('can load from a cookie', function () {
-                        router.collection.load();
+                        router.load();
                         expect(router.get('cookie')).to.equal('testing');
                     });
                 });
 
                 describe('Params Model', function () {
                     it('can get', function () {
-                        router.collection.load();
+                        router.load();
                         expect(router.get('cookie')).to.equal('testing');
                     });
 
                     it('can save', function () {
-                        router.collection.load();
+                        router.load();
 
                         router.set('cookie', 'test');
                         expect(router.get('cookie')).to.equal('test');
                     });
 
                     it('can save to cookie', function () {
-                        router.collection.load();
+                        router.load();
 
                         router.set('cookie', 'test');
                         expect(cookies.get('cookie')).to.equal('test');
                     });
 
                     it('can save to storage', function () {
-                        router.collection.load();
+                        router.load();
 
                         router.set('storage', 'test');
                         expect(storage.get('storage')).to.equal('test');
                     });
                 });
 
-                describe('Initialize params', function () {
-                    it('can load a string', function () {
-                        router.loadParams('k:testing');
-
-                        expect(router.get('k')).to.equal('testing');
-                    });
-                    
-                    it('can load an object', function () {
-                        router.loadParams({
-                            k: 'testing'
-                        });
-
-                        expect(router.collection.get('k').get('value')).to.equal('testing');
-                    });
-                });
-
                 describe('Navigate', function () {
                     it('can generate a hash', function () {
-                        expect(router.getParamsHash()).to.equal('k:testing/x:test');
+                        expect(router.generateHash()).to.equal('k:testing/x:test');
                     });
                 });
             });
