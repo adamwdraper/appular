@@ -16,6 +16,11 @@ define([
                     loadFrom: 'hash',
                     addToUrl: true
                 },
+                data: {
+                    value: null,
+                    loadFrom: 'data',
+                    addToUrl: false
+                },
                 query: {
                     value: null,
                     loadFrom: 'query',

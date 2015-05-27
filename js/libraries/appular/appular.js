@@ -303,7 +303,7 @@ define([
                     }, this);
                 }, this);
             },
-            load: function () {
+            load: function (data) {
                 var params = Backbone.history.getHash().split(this.separators.param),
                     hash = {};
 
@@ -318,6 +318,9 @@ define([
                         id = model.getId();
 
                     switch(model.get('loadFrom')) {
+                        case 'data':
+                            value = data[id];
+                            break;
                         case 'hash':
                             value = hash[id];
                             break;
@@ -444,7 +447,7 @@ define([
                 }, this);
 
                 // load params
-                this.collection.load();
+                this.collection.load(this.data);
 
                 // update hash on change
                 this.collection.on('change', function (param) {
@@ -454,8 +457,7 @@ define([
                 // call original constructor
                 Router.apply(this, arguments);
             },
-            getParamsHash: function () {
-                // Generate and navigate to new hash
+            generateHash: function () {
                 var params = [],
                     hash = '',
                     value,
@@ -491,7 +493,7 @@ define([
                 return hash;
             },
             navigateHash: function (replace) {
-                var hash = this.getParamsHash();
+                var hash = this.generateHash();
 
                 this.navigate(hash, {
                     replace: replace
