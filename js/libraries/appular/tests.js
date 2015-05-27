@@ -228,6 +228,7 @@ define([
 
                 it('Should have certain properties', function () {
                     assert.property(collection, 'config');
+                    assert.property(collection, 'router');
                 });
             });
 
@@ -235,11 +236,33 @@ define([
                 var model;
 
                 beforeEach(function () {
-                    model = new Backbone.Model();
+                    var Model = Backbone.Model.extend({
+                        defaults: {
+                            test: 'test',
+                            bool: true
+                        }
+                    });
+
+                    model = new Model();
                 });
 
                 it('Should have certain properties', function () {
                     assert.property(model, 'config');
+                    assert.property(model, 'router');
+                });
+
+                it('Should be able to be reset', function () {
+                    model.set('test', 'testing');
+
+                    model.reset();
+
+                    expect(model.get('test')).to.equal('test');
+                });
+
+                it('Should be able to toggle a boolean', function () {
+                    model.toggle('bool');
+
+                    expect(model.get('bool')).to.equal(false);
                 });
             });
         });
