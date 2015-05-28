@@ -251,9 +251,6 @@ define([
                     silent: true
                 });
             },
-            /**
-            @function toggle - shortcut to toggle a booleans value
-            */
             toggle: function (name) {
                 this.set(name, !this.get(name));
             }
@@ -359,7 +356,7 @@ define([
                 this.start();
             },
             start: function () {
-                Backbone.history.start(this.history);
+                Backbone.history.loadUrl();
             },
             constructor: function(options) {
                 // add common selectors
@@ -400,6 +397,11 @@ define([
                     }
                 }, this);
 
+                // start history silently so we can load url params
+                Backbone.history.start(_.extend(this.history, {
+                    silent: true
+                }));
+
                 // load params
                 this.load();
 
@@ -412,7 +414,7 @@ define([
                 Router.apply(this, arguments);
             },
             load: function () {
-                var params = Backbone.history.getHash().split(this.separators.param),
+                var params = this.getParams().split(this.separators.param),
                     hash = {};
 
                 // turn hash into map
@@ -452,11 +454,14 @@ define([
                     }
                 }, this);
             },
+            getParams: function () {
+                return this.history.pushState ? Backbone.history.getFragment() : Backbone.history.getHash();
+            },
             generateHash: function () {
                 var params = [],
                     hash = '',
                     value,
-                    currentParams = Backbone.history.getHash() ? Backbone.history.getHash().split(this.separators.param) : [];
+                    currentParams = this.getParams() ? this.getParams().split(this.separators.param) : [];
 
                     // add non params
                     _.each(currentParams, function (param) {
@@ -494,23 +499,14 @@ define([
                     replace: replace
                 });
             },
-            /**
-            @function get - shortcut to get params's value
-            */
             get: function(name, options) {
                 options = options || {};
                 
                 return options.model ? this.collection.get(name) : this.collection.getValue(name);
             },
-            /**
-            @function set - shortcut to set params's value
-            */
             set: function(id, value, options) {
                 return this.collection.setValue(id, value, options);
             },
-            /**
-            @function set - shortcut to set params's value
-            */
             toggle: function (name) {
                 this.collection.setValue(name, !this.collection.get('value'));
             }
